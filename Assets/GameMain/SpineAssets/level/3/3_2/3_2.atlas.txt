@@ -1,0 +1,41 @@
+
+3_2.png
+size: 1466,650
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dengg1
+  rotate: true
+  xy: 414, 2
+  size: 385, 452
+  orig: 387, 459
+  offset: 1, 6
+  index: -1
+dengg2
+  rotate: false
+  xy: 868, 17
+  size: 236, 370
+  orig: 242, 378
+  offset: 5, 7
+  index: -1
+gezi1
+  rotate: false
+  xy: 414, 389
+  size: 720, 259
+  orig: 722, 265
+  offset: 1, 3
+  index: -1
+gezi2
+  rotate: true
+  xy: 1136, 169
+  size: 479, 328
+  orig: 487, 334
+  offset: 4, 3
+  index: -1
+gezi3
+  rotate: true
+  xy: 2, 69
+  size: 579, 410
+  orig: 587, 416
+  offset: 4, 3
+  index: -1

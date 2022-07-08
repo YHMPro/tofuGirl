@@ -1,0 +1,9 @@
+﻿#	实体组配置表			
+#	Id		Name	PoolParamId
+#	int		string	int
+#	实体组Id	备注	实体组名称	对象池参数Id
+	1001	女孩实体组	Girl	1001
+	1002	豆腐实体组	Tofu	1001
+	1003	木条实体组	Batten	1001
+	1004	相机实体组	Camera	1001
+	1005	舞台实体组	Stage	1001

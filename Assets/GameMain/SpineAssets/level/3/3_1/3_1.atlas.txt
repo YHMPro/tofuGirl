@@ -1,0 +1,76 @@
+
+3_1.png
+size: 1095,1061
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bgray
+  rotate: true
+  xy: 2, 339
+  size: 720, 332
+  orig: 722, 352
+  offset: 1, 10
+  index: -1
+love
+  rotate: true
+  xy: 683, 28
+  size: 349, 76
+  orig: 351, 78
+  offset: 1, 1
+  index: -1
+love2
+  rotate: false
+  xy: 761, 223
+  size: 332, 154
+  orig: 334, 156
+  offset: 1, 1
+  index: -1
+love3
+  rotate: false
+  xy: 761, 93
+  size: 293, 128
+  orig: 295, 130
+  offset: 1, 1
+  index: -1
+love4
+  rotate: true
+  xy: 574, 21
+  size: 356, 107
+  orig: 358, 109
+  offset: 1, 1
+  index: -1
+ray1
+  rotate: true
+  xy: 2, 2
+  size: 335, 570
+  orig: 341, 604
+  offset: 1, 3
+  index: -1
+ray2
+  rotate: true
+  xy: 509, 720
+  size: 339, 570
+  orig: 368, 604
+  offset: 5, 3
+  index: -1
+ray3
+  rotate: true
+  xy: 509, 720
+  size: 339, 570
+  orig: 368, 604
+  offset: 5, 3
+  index: -1
+ray4
+  rotate: true
+  xy: 509, 379
+  size: 339, 570
+  orig: 368, 604
+  offset: 24, 3
+  index: -1
+wutai
+  rotate: true
+  xy: 336, 339
+  size: 720, 171
+  orig: 722, 177
+  offset: 1, 4
+  index: -1

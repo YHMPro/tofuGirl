@@ -1,0 +1,10 @@
+﻿#	木条配置表										
+#	Id		SpeedBase	SpeedMin	SpeedMax	DirBase	DirMin	DirMax	CreateTimeBase	CreateTimeMin	CreateTimeMax
+#	int		float	float	float	int	int	int	float	float	float
+#	木条配置Id	备注	基础移动速度	叠加速度最小值	叠加速度最大值	基础方向概率(默认向左)	叠加方向概率最小值	叠加概率最大值	基础创建时间(s)	叠加创建时间最小值	叠加创建时间最大值
+	1001		2	0	3	50	-50	50	1.75	0	3
+	1002		2	0	3	50	-50	50	1	0	3
+	1003		2	0	3	50	-50	50	1	0	3
+	1004		2	0	3	50	-50	50	1	0	3
+	1005		2	0	3	50	-50	50	1	0	3
+	1006		2	0	3	50	-50	50	1	0	3

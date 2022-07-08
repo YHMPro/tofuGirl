@@ -1,0 +1,146 @@
+
+1_2.png
+size: 1233,1035
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg5
+  rotate: false
+  xy: 538, 437
+  size: 563, 596
+  orig: 598, 618
+  offset: 1, 4
+  index: -1
+bg6
+  rotate: false
+  xy: 538, 163
+  size: 416, 272
+  orig: 422, 278
+  offset: 3, 3
+  index: -1
+chuanglian
+  rotate: false
+  xy: 2, 2
+  size: 257, 74
+  orig: 259, 76
+  offset: 1, 1
+  index: -1
+chuanglian2
+  rotate: false
+  xy: 538, 87
+  size: 257, 74
+  orig: 259, 76
+  offset: 1, 1
+  index: -1
+chuanglian3
+  rotate: false
+  xy: 2, 78
+  size: 266, 955
+  orig: 272, 961
+  offset: 5, 5
+  index: -1
+chuanglian4
+  rotate: false
+  xy: 270, 78
+  size: 266, 955
+  orig: 272, 961
+  offset: 1, 5
+  index: -1
+deng
+  rotate: false
+  xy: 1103, 502
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng1
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng10
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng2
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng3
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng4
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng5
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng6
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng7
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng8
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+deng9
+  rotate: false
+  xy: 261, 28
+  size: 48, 48
+  orig: 52, 52
+  offset: 2, 2
+  index: -1
+jiu
+  rotate: false
+  xy: 1103, 552
+  size: 128, 215
+  orig: 135, 222
+  offset: 3, 4
+  index: -1
+ping
+  rotate: false
+  xy: 1103, 769
+  size: 128, 264
+  orig: 134, 270
+  offset: 3, 3
+  index: -1
+rag_bg
+  rotate: true
+  xy: 956, 45
+  size: 390, 241
+  orig: 392, 243
+  offset: 1, 1
+  index: -1
