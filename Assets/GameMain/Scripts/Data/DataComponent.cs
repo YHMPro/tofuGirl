@@ -20,6 +20,7 @@ namespace Project.TofuGirl.Data
 
         private void Start()
         {
+            m_DataManager.AddData<DataRocket>();
             m_DataManager.AddData<DataGirl>();
             m_DataManager.AddData<DataBatten>();
             m_DataManager.AddData<DataPoolParam>();

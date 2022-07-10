@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2022-07-07 17:25:29.506
+// 生成时间：2022-07-10 11:42:17.493
 //------------------------------------------------------------
 
 using GameFramework;
@@ -54,6 +54,15 @@ namespace Project.TofuGirl
             private set;
         }
 
+        /// <summary>
+        /// 获取火箭配置Id。
+        /// </summary>
+        public int RocketDataId
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -68,6 +77,7 @@ namespace Project.TofuGirl
             index++;
             GirlDataId = int.Parse(columnStrings[index++]);
             BattenDataId = int.Parse(columnStrings[index++]);
+            RocketDataId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -82,6 +92,7 @@ namespace Project.TofuGirl
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     GirlDataId = binaryReader.Read7BitEncodedInt32();
                     BattenDataId = binaryReader.Read7BitEncodedInt32();
+                    RocketDataId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

@@ -21,6 +21,12 @@ namespace Project.TofuGirl.Entity
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
+            #region 修改层级
+            UpTran.gameObject.SetLayerRecursively(0);
+            MiddleTran.gameObject.SetLayerRecursively(0);
+            DownTran.gameObject.SetLayerRecursively(10);
+
+            #endregion
             m_EntityData = userData as StageEntityData;
             if(m_EntityData==null)
             {
@@ -32,8 +38,6 @@ namespace Project.TofuGirl.Entity
             MiddleTran.position = Vector3.zero;
             DownTran.position = new Vector3(0,- cameraH / 2, 0);
         }
-
-
 
         public override void Pause(object userData)
         {

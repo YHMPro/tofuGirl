@@ -10,14 +10,12 @@ namespace Project
     public partial class GameEntry : MonoBehaviour
     {
         public static DataComponent Data { get; private set; }
-        public static GameComponent Game { get; private set; }
 
         public static CoroutineComponent Coroutine { get; private set; }
         private static void InitCustomComponents()
         {
             Data =FindObjectOfType<DataComponent>();
             Coroutine= FindObjectOfType<CoroutineComponent>();
-            //Game = FindObjectOfType<GameComponent>();
         }
     }
 }

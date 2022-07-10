@@ -13,6 +13,10 @@ namespace Project.TofuGirl.Entity
 
         public int PrevId { get; private set; }
 
+        public float Gravity { get; private set; }
+
+        public EnumTofu TofuType { get;private set; }
+
         public static TofuEntityData Create(TofuBridgeData bridgeData,object userData=null)
         {
             TofuEntityData tofuEntityData = ReferencePool.Acquire<TofuEntityData>();
@@ -24,6 +28,8 @@ namespace Project.TofuGirl.Entity
             tofuEntityData.OrderInLayer = m_OrderInLayer;
             tofuEntityData.FirstTofu = bridgeData.FirstTofu;
             tofuEntityData.PrevId = bridgeData.PrevId;
+            tofuEntityData.TofuType = bridgeData.TofuType;
+            tofuEntityData.Gravity = bridgeData.Gravity;
             return tofuEntityData;
         }
 

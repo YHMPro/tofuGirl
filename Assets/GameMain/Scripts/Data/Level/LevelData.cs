@@ -21,11 +21,13 @@ namespace Project.TofuGirl.Data
         /// </summary>
         public BattenData BData { get; private set; }
 
-        public LevelData(DTLevel dTLevel, GirlData girlData, BattenData battenData)
+        public RocketData RData { get; private set; }
+        public LevelData(DTLevel dTLevel, GirlData girlData, BattenData battenData ,RocketData rocketData)
         {
             m_Level = dTLevel;
             GData = girlData;
             BData = battenData;
+            RData = rocketData;
         }
     }
 }

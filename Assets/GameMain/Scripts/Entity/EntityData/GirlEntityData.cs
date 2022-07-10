@@ -8,6 +8,7 @@ namespace Project.TofuGirl.Entity
     public sealed class GirlEntityData : GOEntityData
     {
         public float Speed { get; private set; }
+        public float Gravity { get; private set; }
 
         public static GirlEntityData Create(GirlBridgeData bridgeData, object userData = null)
         {

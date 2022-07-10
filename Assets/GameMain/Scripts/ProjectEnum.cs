@@ -1,6 +1,15 @@
 ﻿namespace Project.TofuGirl
 {
     /// <summary>
+    /// 相机跟随样式
+    /// </summary>
+    public enum EnumCameraFollow
+    {
+        Rocket,
+        Stage,
+        Girl
+    }
+    /// <summary>
     /// 游戏模式
     /// </summary>
     public enum EnumGameModel
@@ -71,6 +80,14 @@
         /// <summary>
         /// 相机
         /// </summary>
-        Camera
+        Camera,
+        /// <summary>
+        /// 火箭
+        /// </summary>
+        Rocket,
+        /// <summary>
+        /// 舞台
+        /// </summary>
+        Stage
     }
 }

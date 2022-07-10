@@ -16,13 +16,10 @@ namespace Project.TofuGirl
         /// <summary>
         /// 关卡是否开始
         /// </summary>
-        public bool LevelStart { get; private set; }
+        public bool LevelStart { get; private set; }      
         /// <summary>
-        /// 游戏控制器
+        /// 游戏管理器
         /// </summary>
-        public GameController GController { get; private set; }
-
-
         public GameManager GM { get; private set; }
 
         protected override void OnInit(IFsm<IProcedureManager> procedureOwner)

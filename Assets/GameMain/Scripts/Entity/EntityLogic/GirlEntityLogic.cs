@@ -30,6 +30,7 @@ namespace Project.TofuGirl.Entity
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
+            m_Anim.Play("idle",true);
             m_Jump = false;
             Died = false;
             Rig2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
@@ -41,6 +42,19 @@ namespace Project.TofuGirl.Entity
             Rig2D.gravityScale = m_EntityData.Gravity;
         }
 
+        protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
+        {
+            base.OnAttachTo(parentEntity, parentTransform, userData);
+            Rig2D.isKinematic = true;
+            m_Jump = true;
+        }
+
+        protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
+        {
+            base.OnDetachFrom(parentEntity, userData);
+            Rig2D.isKinematic = false;
+            m_Jump = false;
+        }
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
@@ -76,7 +90,7 @@ namespace Project.TofuGirl.Entity
                 m_Anim.Play("bad");
 
                 GameEntry.Event.Fire(this, GirlDiedEventArgs.Create());//派发角色死亡事件
-
+                GameEntry.Event.Fire(this, UpdateCameraFollowInfoEventArgs.Create(EnumCameraFollow.Stage));
                 GameEntry.Coroutine.Delay(0.35f, () =>
                 {
                     m_Anim.Pause();
@@ -87,8 +101,8 @@ namespace Project.TofuGirl.Entity
             if (m_Jump&&collision.relativeVelocity.magnitude > 1)
             {
                 m_Jump = false;
-                CollisionLogic(collision.transform.position, collision.collider as BoxCollider2D);
-                GameEntry.Event.Fire(this, CameraFollowEventArgs.Create(new Vector3(m_TopPoint.position.x, m_TopPoint.position.y, -10)));
+                CollisionLogic(collision.transform.position, collision.collider as BoxCollider2D);                                            
+                GameEntry.Event.Fire(this, UpdateCameraFollowInfoEventArgs.Create(EnumCameraFollow.Girl));
             }
         }
         #region 碰撞判定

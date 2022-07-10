@@ -7,7 +7,11 @@ namespace Project.TofuGirl.Data
     public class TofuBridgeData : BridgeData
     {
         public EnumTofu TofuType;
+
+        public float Gravity;
+
         public bool FirstTofu;
+
         public int PrevId;
 
         public static TofuBridgeData Create()

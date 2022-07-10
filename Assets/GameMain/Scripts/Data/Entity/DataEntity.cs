@@ -16,12 +16,10 @@ namespace Project.TofuGirl.Data
 
         protected override void OnPreload()
         {
-            base.OnPreload();
             LoadDataTable("Entity");
         }
         protected override void OnLoad()
         {
-
             //提取预加载的数据
             m_DT=GameEntry.DataTable.GetDataTable<DTEntity>();
             m_EDDic = new Dictionary<int, EntityData>();

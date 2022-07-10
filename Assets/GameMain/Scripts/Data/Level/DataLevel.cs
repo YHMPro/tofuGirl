@@ -32,7 +32,8 @@ namespace Project.TofuGirl.Data
                     LevelData levelData = new LevelData(
                         dTLevel,                       
                         GameEntry.Data.GetData<DataGirl>().GetGirlData(dTLevel.GirlDataId),
-                        GameEntry.Data.GetData<DataBatten>().GetBattenData(dTLevel.BattenDataId)
+                        GameEntry.Data.GetData<DataBatten>().GetBattenData(dTLevel.BattenDataId),
+                        GameEntry.Data.GetData<DataRocket>().GetRocketData(dTLevel.RocketDataId)
                         );              
                     m_LDDic.Add(dTLevel.Id, levelData);
                 }

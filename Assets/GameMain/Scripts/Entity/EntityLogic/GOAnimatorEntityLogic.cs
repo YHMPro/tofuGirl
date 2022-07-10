@@ -47,8 +47,8 @@ namespace Project.TofuGirl.Entity
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
-            m_Anim.ContinuePlay();
             m_Anim.Reset();
+            m_Anim.ContinuePlay();        
             m_EntityData = userData as GOAnimatorEntityData;
             if(m_EntityData==null)
             {

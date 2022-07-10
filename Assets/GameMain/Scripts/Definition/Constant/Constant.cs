@@ -16,6 +16,8 @@ namespace Project
             public const int CameraId = 1004;
 
             public const int StageId_1 = 1005;
+
+            public const int RocketId = 1006;
         }
     }
 }

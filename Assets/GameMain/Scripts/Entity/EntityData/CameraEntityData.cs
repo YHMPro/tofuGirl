@@ -13,6 +13,7 @@ namespace Project.TofuGirl.Entity
             cameraEntityData.Position = bridgeData.InitPosition;
             cameraEntityData.Rotation = bridgeData.InitRotation;
             cameraEntityData.UserData = userData;
+            cameraEntityData.EntityType = EnumEntity.Camera;
             return cameraEntityData;
         }
         public static CameraEntityData Create(Vector3 position,Vector3 rotation,object userData=null)

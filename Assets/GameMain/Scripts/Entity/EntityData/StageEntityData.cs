@@ -17,6 +17,7 @@ namespace Project.TofuGirl.Entity
             stageEntityData.Position = birdgeData.InitPosition;
             stageEntityData.Rotation = birdgeData.InitRotation;
             stageEntityData.UserData = userData;
+            stageEntityData.EntityType = EnumEntity.Stage;
             return stageEntityData;
         }
         public static StageEntityData Create(Vector3 position, Vector3 rotation,object userData=null)

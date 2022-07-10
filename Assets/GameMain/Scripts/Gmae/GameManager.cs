@@ -20,6 +20,10 @@ namespace Project.TofuGirl
         private EntityLoader m_ELoader;
         #region  桥接数据
         /// <summary>
+        /// 火箭桥接数据(豆腐道具)
+        /// </summary>
+        private RocketBridgeData m_RBData;
+        /// <summary>
         /// 相机桥接数据
         /// </summary>
         private CameraBridgeData m_CBData;
@@ -69,6 +73,7 @@ namespace Project.TofuGirl
             gm.GameStart = false;
             gm.GameOver = false;
             gm.GirlDied = false;
+            gm.m_StairGenerate = true;
 
             gm.CameraSerialId = 0;
             gm.GirlSerialId = 0;
@@ -114,7 +119,7 @@ namespace Project.TofuGirl
 
             #region 女孩桥接数据
             gm.m_GBData = GirlBridgeData.Create();
-            gm.m_GBData.Gravity = 1.2f;
+            gm.m_GBData.Gravity = 1f;
             gm.m_GBData.InitPosition = new Vector3(0, -2.7f, 0);
             gm.m_GBData.Speed = gm.m_LData.GData.BaseSpeed;
             #endregion
@@ -129,6 +134,11 @@ namespace Project.TofuGirl
             gm.m_CBData = CameraBridgeData.Create();
             gm.m_CBData.InitPosition = new Vector3(0, 0, -10);
             gm.m_CBData.InitRotation = Vector3.zero;
+            #endregion
+
+            #region 火箭桥接数据
+            gm.m_RBData = RocketBridgeData.Create();
+            gm.m_RBData.Speed = 15f;
             #endregion
         }
         /// <summary>
@@ -166,8 +176,12 @@ namespace Project.TofuGirl
             GameEntry.Event.Subscribe(UpdateNowTofuSerialldEventArgs.EventId, OnUpdateNowTofuSerialId);
             GameEntry.Event.Subscribe(UpdateTopTofuSerialldEventArgs.EventId, OnUpdateTopTofuSerialId);
             GameEntry.Event.Subscribe(GameOverEventArgs.EventId, OnGameOver);
+            GameEntry.Event.Subscribe(UpdateStairGenerateEventArgs.EventId, OnUpdateStairGenerateInfo);
+            GameEntry.Event.Subscribe(TofuWithGirlCollisionEventArgs.EventId, OnTofuWithGirlCollision);
+            GameEntry.Event.Subscribe(UpdateCameraFollowEventArgs.EventId, OnUpdateCameraFollow);
 
 
+            GameEntry.Event.Subscribe(UpdateCameraFollowInfoEventArgs.EventId, OnUpdateCameraFollowInfo);
         }
         /// <summary>
         /// 事件注销
@@ -179,7 +193,12 @@ namespace Project.TofuGirl
             GameEntry.Event.Unsubscribe(UpdateNowTofuSerialldEventArgs.EventId, OnUpdateNowTofuSerialId);
             GameEntry.Event.Unsubscribe(UpdateTopTofuSerialldEventArgs.EventId, OnUpdateTopTofuSerialId);
             GameEntry.Event.Unsubscribe(GameOverEventArgs.EventId, OnGameOver);
+            GameEntry.Event.Unsubscribe(UpdateStairGenerateEventArgs.EventId, OnUpdateStairGenerateInfo);
+            GameEntry.Event.Unsubscribe(TofuWithGirlCollisionEventArgs.EventId, OnTofuWithGirlCollision);
+            GameEntry.Event.Unsubscribe(UpdateCameraFollowEventArgs.EventId, OnUpdateCameraFollow);
 
+
+            GameEntry.Event.Subscribe(UpdateCameraFollowInfoEventArgs.EventId, OnUpdateCameraFollowInfo);
         }
     }
     /// <summary>
@@ -188,6 +207,8 @@ namespace Project.TofuGirl
     public sealed partial class GameManager
     {
         private const int m_TotalRate = 100;
+        private const float m_LeftPointToBattenCenterDis = -1.85f;
+        private const float m_RightPointToBattenCenterDis = 1.85f;
 
         private int m_PuTongTofuTotal = 0;
         private int m_TeShuTofuTotal = 0;
@@ -214,68 +235,75 @@ namespace Project.TofuGirl
             return m_LData.BData.CreateTimeBase+time;
         }
         #region 木条桥接数据更新
-        private void BattenBridgeDataUpdate()
+        private void BattenBridgeDataUpdate(bool daoju=false)
         {
             //速度
-            m_BBData.Speed = 2;
+            m_BBData.Speed = daoju?25:2;
             //左右方向
             int leftDir = 50;
             m_BBData.MoveType = RandRateTool.BattenMoveRandRate(leftDir, m_TotalRate - leftDir);
             //位置
             m_BBData.InitPosition.y = GameEntry.Entity.GetEntity(NowTofuSerialId).transform.position.y+0.7f;
-            m_BBData.InitPosition.x = 5.5f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
+            m_BBData.InitPosition.x = 7f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
             //目标位置
             m_BBData.AimPosition.y = m_BBData.InitPosition.y;
-
+            m_BBData.AimPosition.x=1.85f* ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
             Log.Info("木条信息=>木条速度:{0},木条方向:{1}", m_BBData.Speed, m_BBData.MoveType);
         }
         #endregion
 
         #region 豆腐桥接数据更新
-        private void TofuBridgeDataUpdate()
+        /// <summary>
+        /// 豆腐桥接数据更新
+        /// </summary>
+        private void TofuBridgeDataUpdate(bool daoju=false)
         {
-            //位置
-            m_TBData.InitPosition = Vector3.zero;//也可不赋值
-
+            m_TBData.FirstTofu = false;
+            #region 豆腐位置计算
+            //得到木条左右点相对于木条中心的相对位置
+            m_TBData.InitPosition = m_BBData.InitPosition + new Vector3((EnumBattenMove.Left== m_BBData.MoveType)?m_LeftPointToBattenCenterDis:m_RightPointToBattenCenterDis, 0, 0);       
+            m_TBData.InitRotation = Vector3.zero;
+            #endregion
             //豆腐类型
             ++m_TeShuTofu;
             ++m_JinSeTeShuTofu;
-
-            #region 金色特殊台阶概率计算
-            if (m_JinSeTeShuTofu>=4)
-            {
-                //有百分之50%的概率出现  或 达到阈值:5
-                if((RandRateTool.RandRate(new int[] { 50, 50 }, 100)==1)|| (m_JinSeTeShuTofu>=6))
+            if (daoju)
+            {              
+                #region 金色特殊豆腐概率计算
+                if (m_JinSeTeShuTofu >= 4)
                 {
-                    //生成金色特殊豆腐
-                    m_JinSeTeShuTofu = 0;
-                    m_JinSeTeShuTofuTotal++;
-                    //Log.Info("生成金色特殊豆腐");
-                    m_TBData.TofuType = EnumTofu.JinSeTeShu;
+                    //有百分之50%的概率出现  或 达到阈值:5
+                    if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_JinSeTeShuTofu >= 6))
+                    {
+                        //生成金色特殊豆腐
+                        m_JinSeTeShuTofu = 0;
+                        m_JinSeTeShuTofuTotal++;
+                        //Log.Info("生成金色特殊豆腐");
+                        m_TBData.TofuType = EnumTofu.JinSeTeShu;
+                    }
                 }
-            }
-            #endregion
+                #endregion
 
-            #region 道具台阶概率计算
-            if((m_JinSeTeShuTofu!=0)&& m_TeShuTofu>=3)
-            {
-                //有百分之50%的概率出现  或 达到阈值:5
-                if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_TeShuTofu >= 5))
+                #region 特殊豆腐概率计算
+                if ((m_JinSeTeShuTofu != 0) && (m_TeShuTofu >= 3))
                 {
-                    //生成特殊豆腐
-                    m_TeShuTofu = 0;
-                    //Log.Info("生成特殊豆腐");
-                    m_TBData.TofuType = EnumTofu.TeShu;
-                    m_TeShuTofuTotal++;
+                    //有百分之50%的概率出现  或 达到阈值:5
+                    if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_TeShuTofu >= 5))
+                    {
+                        //生成特殊豆腐
+                        m_TeShuTofu = 0;
+                        //Log.Info("生成特殊豆腐");
+                        m_TBData.TofuType = EnumTofu.TeShu;
+                        m_TeShuTofuTotal++;
+                    }
                 }
+                #endregion
             }
-            #endregion
-
-            #region 道具台阶与普通台阶概率计算
-            if ((m_JinSeTeShuTofu!=0)&& m_TeShuTofu!=0)
+            #region 道具豆腐与普通豆腐概率计算
+            if ((m_JinSeTeShuTofu!=0)&& (m_TeShuTofu!=0))
             {
-                //80%普通豆腐 20%道具豆腐
-                if (RandRateTool.RandRate(new int[] { 80, 20 }, 100) == 0)
+                //80%普通豆腐 20%道具豆腐   当触发道具时 100%普通豆腐  
+                if ((RandRateTool.RandRate(new int[] { 0, 100 }, 100) == 0)|| daoju)
                 {
                     //生成普通豆腐                   
                     //Log.Info("生成普通豆腐");
@@ -285,12 +313,14 @@ namespace Project.TofuGirl
                 else
                 {
                     //生成道具豆腐
+                    m_StairGenerate = false;//停止台阶的生成 但本台阶还是会生成
                     //Log.Info("生成道具豆腐");
                     m_TBData.TofuType = EnumTofu.DaoJu;
                     m_DaoJuTofuTotal++;
                 }
             }
-            #endregion                 
+            #endregion               
+            
             //对接的上一个豆腐Id
             m_TBData.PrevId = NowTofuSerialId;
             Log.Info("豆腐信息=> 豆腐类型:{0},累计的特殊豆腐条件值:{1},累计的金色特殊豆腐条件值:{2},已生成的普通豆腐总和:{3},已生成的道具豆腐总和:{4},已生成的特殊豆腐总和:{5},已生成的金色特殊豆腐总和:{6}",
@@ -298,7 +328,26 @@ namespace Project.TofuGirl
                 );
         }
         #endregion
-        #endregion      
+        #endregion
+
+        #region 道具
+
+        #region 火箭桥接数据更新
+        private void RocketBridgeDataUpdate()
+        {
+            //位置:当前顶部豆腐的位置 + 0.7f
+            m_RBData.InitPosition.x = 0;
+            m_RBData.InitPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y + 0.7f;
+            m_RBData.InitRotation = Vector3.zero;
+            //目标位置: 越过的数量*0.7
+            m_RBData.AimPosition.x = 0;
+            m_RBData.AimPosition.y = m_LData.RData.TofuNum * 0.7f;
+            //速度
+            m_RBData.Speed = m_LData.RData.Speed;
+        }
+        #endregion
+
+        #endregion
     }
     /// <summary>
     /// 游戏事件监听
@@ -342,9 +391,11 @@ namespace Project.TofuGirl
             //派发木条移动事件
             GameEntry.Event.Fire(this, BattenMoveEventArgs.Create(false));
             //派发相机跟随事件
-            GameEntry.Coroutine.Delay(2, () =>
+            GameEntry.Coroutine.Delay(2, () =>//暂时2秒后
             {
-                GameEntry.Event.Fire(this, CameraFollowEventArgs.Create((GameEntry.Entity.GetEntity(StageSerialId).Logic as StageEntityLogic).DownTran.position));
+            Vector3 cameraAimPosition = (GameEntry.Entity.GetEntity(StageSerialId).Logic as StageEntityLogic).DownTran.position;
+                cameraAimPosition.z = -10;
+                GameEntry.Event.Fire(this, CameraFollowEventArgs.Create(cameraAimPosition,EnumEntity.Stage,4));
             });  
         }
 
@@ -389,6 +440,112 @@ namespace Project.TofuGirl
             Log.Info("游戏结束");
             GameOver = true;
         }
+
+        private void OnUpdateStairGenerateInfo(object sender,GameEventArgs gEArgs)
+        {
+            UpdateStairGenerateEventArgs args = gEArgs as UpdateStairGenerateEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            m_StairGenerate=args.StairGenerate;
+        }
+
+        private void OnTofuWithGirlCollision(object sender,GameEventArgs gEArgs)
+        {
+            TofuWithGirlCollisionEventArgs args = gEArgs as TofuWithGirlCollisionEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            if(!(sender is TofuEntityLogic))
+            {
+                return;
+            }
+            switch((sender as TofuEntityLogic).TofuType)
+            {
+                case EnumTofu.DaoJu:
+                    {
+                        RocketBridgeDataUpdate();
+                        //生成一个火箭实体
+                        m_ELoader.ShowEntity<RocketEntityLogic>(GameEntry.Entity.GenerateSerialId(),Constant.EntityId.RocketId, (rocketEntity) => 
+                        {
+                           
+                        }, RocketEntityData.Create(m_RBData));
+                        break;
+                    }
+            }
+        }
+
+        private void OnUpdateCameraFollow(object sender,GameEventArgs gEArgs)
+        {
+            UpdateCameraFollowEventArgs args = gEArgs as UpdateCameraFollowEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            
+
+        }
+        /// <summary>
+        /// 监听相机跟随信息更新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="gEArgs"></param>
+        private void OnUpdateCameraFollowInfo(object sender, GameEventArgs gEArgs)
+        {
+            UpdateCameraFollowInfoEventArgs args = gEArgs as UpdateCameraFollowInfoEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            Vector3 cameraAimPosition = Vector3.zero;
+            float speed = 0;
+            float delayTime = 0;
+            switch(args.FollowType)
+            {
+                case EnumCameraFollow.Rocket:
+                    {
+                        Debug.Log(m_RBData.Speed);
+                        //速度
+                        speed = m_RBData.Speed;
+                        //位置
+                        cameraAimPosition = m_RBData.AimPosition;
+                        cameraAimPosition.z = -10;
+                        //延迟
+                        delayTime = 0;
+                        break;
+                    }
+                case EnumCameraFollow.Stage:
+                    {
+                        //速度
+                        speed = 6;
+                        //位置
+                        cameraAimPosition.y = (GameEntry.Entity.GetEntity(StageSerialId).Logic as StageEntityLogic).DownTran.position.y;
+                        cameraAimPosition.z = -10;
+                        //延迟
+                        delayTime = 2;
+                        break;
+                    }
+                case EnumCameraFollow.Girl:
+                    {
+                        //速度
+                        speed = 5;
+                        //位置
+                        cameraAimPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y;
+                        cameraAimPosition.z = -10;
+                        //延迟
+
+                        if (cameraAimPosition.y<=0)
+                        {
+                            return;
+                        }
+                        break;
+                    }
+            }
+            Log.Info("相机跟随信息更新 目标位置:{0},跟随样式:{1},跟随速度:{2}", cameraAimPosition, args.FollowType, speed);
+            GameEntry.Event.Fire(this, SetCameraFollowInfoEventArgs.Create(cameraAimPosition, args.FollowType, speed, delayTime));
+        }
     }
 
     /// <summary>
@@ -397,6 +554,10 @@ namespace Project.TofuGirl
     public sealed partial class GameManager 
     {
         private float m_ElapseSeconds = 0;
+        /// <summary>
+        /// 台阶构建
+        /// </summary>
+        private bool m_StairGenerate = false;
         /// <summary>
         /// 状态轮询时调用(游戏更新)
         /// </summary>
@@ -408,12 +569,20 @@ namespace Project.TofuGirl
             {
                 return;
             }
+            if(!m_StairGenerate)
+            {
+                return;
+            }
             //台阶创建
             StairGenerate(elapseSeconds, realElapseSeconds);
         }
 
-
-        public void StairGenerate(float elapseSeconds, float realElapseSeconds)
+        /// <summary>
+        /// 台阶构建
+        /// </summary>
+        /// <param name="elapseSeconds"></param>
+        /// <param name="realElapseSeconds"></param>
+        private void StairGenerate(float elapseSeconds, float realElapseSeconds)
         {
             m_ElapseSeconds += elapseSeconds;
             if(m_ElapseSeconds<=StairGenerateTime())//满足创建时间即可创建,受女孩死亡事件影响
@@ -421,10 +590,11 @@ namespace Project.TofuGirl
                 return;
             }
             m_ElapseSeconds = 0;       
-            #region 台阶桥接数据修改
-            TofuBridgeDataUpdate();
+            #region 台阶桥接数据修改      
             BattenBridgeDataUpdate();
+            TofuBridgeDataUpdate();
             #endregion
+
             #region 台阶生成
             m_ELoader.ShowEntity<BattenEntityLogic>(GameEntry.Entity.GenerateSerialId(), Constant.EntityId.BattemId, (battenEntity) =>
             {
@@ -436,6 +606,7 @@ namespace Project.TofuGirl
             #endregion
         }
 
+
         public void Clear()
         {
             EventUnsubscribe();
@@ -445,6 +616,7 @@ namespace Project.TofuGirl
             m_LData = null;
             m_SBData = null;
             m_TBData = null;
+            m_RBData = null;
             m_ELoader.Clear();
             m_ELoader = null;
         }
