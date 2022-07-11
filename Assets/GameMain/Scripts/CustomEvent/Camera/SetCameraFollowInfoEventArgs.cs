@@ -18,7 +18,13 @@ namespace Project.TofuGirl.Event
         /// <summary>
         /// 跟随样式
         /// </summary>
-        public EnumCameraFollow FollowType { get; private set; }
+        /// <summary>
+        /// 发起类型
+        /// </summary>
+        public EnumSender SenderType
+        {
+            get;private set;
+        }
         /// <summary>
         /// 跟随速度
         /// </summary>
@@ -31,11 +37,11 @@ namespace Project.TofuGirl.Event
         {
 
         }
-        public static SetCameraFollowInfoEventArgs Create(Vector3 aimPosition, EnumCameraFollow followType, float speed,float delayTime=0)
+        public static SetCameraFollowInfoEventArgs Create(Vector3 aimPosition, EnumSender senderType, float speed,float delayTime=0)
         {
             SetCameraFollowInfoEventArgs args = ReferencePool.Acquire<SetCameraFollowInfoEventArgs>();
             args.AimPosition = aimPosition;
-            args.FollowType = followType;
+            args.SenderType = senderType;
             args.Speed = speed;
             args.DelayTime = delayTime;
             return args;

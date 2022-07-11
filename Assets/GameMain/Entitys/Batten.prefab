@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6634331362240311058}
   - component: {fileID: 2353111257145833788}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: BattenSpr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7212524373558289420}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: RightPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7276374985782821224}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: LeftPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6694455249849249469}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Batten
   m_TagString: Untagged
   m_Icon: {fileID: 0}

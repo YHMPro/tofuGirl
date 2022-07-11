@@ -2,7 +2,7 @@
 #	Id		BaseSpeed	TofuNum
 #	int		float	int
 #	火箭配置Id	备注	基础飞行速度	越过的豆腐数量
-	1001		6	5
+	1001		10	10
 	1002		5	5
 	1003		5	5
 	1004		5	5

@@ -21,10 +21,10 @@ namespace Project.TofuGirl.Entity
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
-            #region 修改层级
-            UpTran.gameObject.SetLayerRecursively(0);
-            MiddleTran.gameObject.SetLayerRecursively(0);
-            DownTran.gameObject.SetLayerRecursively(10);
+            #region 层级修正
+            UpTran.gameObject.SetLayerRecursively(12);
+            MiddleTran.gameObject.SetLayerRecursively(12);
+            DownTran.gameObject.SetLayerRecursively(11);
 
             #endregion
             m_EntityData = userData as StageEntityData;

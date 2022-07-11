@@ -34,7 +34,7 @@ namespace Project.TofuGirl.Entity
             RightPoint = transform.GetChild(0);
             LeftPoint = transform.GetChild(1);
             m_SRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
-            GameEntry.Event.Subscribe(BattenMoveEventArgs.EventId, OnBattenMove);
+            GameEntry.Event.Subscribe(SetBattenMoveInfoEventArgs.EventId, OnBattenMoveInfo);
         }
 
         protected override void OnShow(object userData)
@@ -63,7 +63,6 @@ namespace Project.TofuGirl.Entity
         protected override void OnDetached(EntityLogic childEntity, object userData)
         {
             base.OnDetached(childEntity, userData);
-            GameEntry.Event.Fire(this, UpdateTopTofuSerialldEventArgs.Create(m_BindTofuId));
             GameEntry.Entity.HideEntity(Entity);
             m_MoveAction = null;
         }
@@ -72,24 +71,28 @@ namespace Project.TofuGirl.Entity
         {   
             if(isShutdown)
             {
-                GameEntry.Event.Unsubscribe(BattenMoveEventArgs.EventId, OnBattenMove);
+                GameEntry.Event.Unsubscribe(SetBattenMoveInfoEventArgs.EventId, OnBattenMoveInfo);
             }
             base.OnHide(isShutdown, userData);
         }
-             
-        private void OnBattenMove(object sender,GameEventArgs gEArgs)
+
+        private void OnBattenMoveInfo(object sender, GameEventArgs gEArgs)
         {
-            BattenMoveEventArgs args = gEArgs as BattenMoveEventArgs;
+            SetBattenMoveInfoEventArgs args = gEArgs as SetBattenMoveInfoEventArgs;
             if (args == null)
             {
                 return;
             }
-            if(sender is GameManager)
+            if (args.Move)
+            {
+                m_MoveAction = Move;
+            }
+            else
             {
                 m_MoveAction = null;
-            }           
+            }
+            Log.Info(1);
         }
-
         public override void Pause(object userData)
         {
            
@@ -101,6 +104,8 @@ namespace Project.TofuGirl.Entity
             if (m_EntityData.AimPosition == transform.position)
             {
                 m_MoveAction = null;
+                //更新顶部豆腐Id
+                GameEntry.Event.Fire(this, TopTofuIdUpdateEventArgs.Create(m_BindTofuId));
                 //触发摆放完美事件
                 GameEntry.Event.Fire(this, TofuPutEventArgs.Create(m_BindTofuId, true));
                 //解除子实体          

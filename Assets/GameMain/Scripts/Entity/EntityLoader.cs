@@ -28,7 +28,7 @@ namespace Project
             return entityLoader;
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             m_ShowCallbackDic.Clear();
             GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, this.OnShowEntitySuccess);

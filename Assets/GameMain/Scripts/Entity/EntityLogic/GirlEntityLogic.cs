@@ -13,6 +13,10 @@ namespace Project.TofuGirl.Entity
 
         private Transform m_TopPoint;
         /// <summary>
+        /// 绑定火箭
+        /// </summary>
+        private bool m_BindRocket = false;
+        /// <summary>
         /// 是否死亡
         /// </summary>
         public bool Died { get; private set; }
@@ -45,15 +49,18 @@ namespace Project.TofuGirl.Entity
         protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
+            m_BindRocket = true;
             Rig2D.isKinematic = true;
             m_Jump = true;
+            m_Anim.Play("fly",true);
         }
 
         protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
         {
             base.OnDetachFrom(parentEntity, userData);
             Rig2D.isKinematic = false;
-            m_Jump = false;
+            //添加一个速度
+            Rig2D.velocity = new Vector3(0, (parentEntity as RocketEntityLogic).Speed/2f, 0);
         }
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
@@ -81,28 +88,49 @@ namespace Project.TofuGirl.Entity
             {
                 return;
             }
-            float d = (transform.position - collision.transform.position).y- (collision.collider as BoxCollider2D).size.y;
-            if (d< 0.01f)
-            {
-                Died = true;
-                Rig2D.constraints = RigidbodyConstraints2D.None;
-                Rig2D.velocity = ((((transform.position - collision.transform.position).normalized).x * Vector2.right) + Vector2.up) * 5f;
-                m_Anim.Play("bad");
+            //float d = (transform.position - collision.transform.position).y- (collision.collider as BoxCollider2D).size.y;
+            //if (d< 0.01f)
+            //{
+            //    //Died = true;
+            //    //Rig2D.constraints = RigidbodyConstraints2D.None;
+            //    //Rig2D.velocity = ((((transform.position - collision.transform.position).normalized).x * Vector2.right) + Vector2.up) * 5f;
+            //    //m_Anim.Play("bad");
 
-                GameEntry.Event.Fire(this, GirlDiedEventArgs.Create());//派发角色死亡事件
-                GameEntry.Event.Fire(this, UpdateCameraFollowInfoEventArgs.Create(EnumCameraFollow.Stage));
-                GameEntry.Coroutine.Delay(0.35f, () =>
-                {
-                    m_Anim.Pause();
-                    Rig2D.constraints = RigidbodyConstraints2D.FreezeAll;
-                });          
-                return;
+            //    //GameEntry.Event.Fire(this, GirlDiedEventArgs.Create());//派发角色死亡事件
+            //    //GameEntry.Event.Fire(this, UpdateBattenMoveInfoEventArgs.Create(false));
+            //    //GameEntry.Event.Fire(this, UpdateCameraFollowInfoEventArgs.Create(EnumSender.Stage));
+            //    //GameEntry.Coroutine.Delay(0.35f, () =>
+            //    //{
+            //    //    m_Anim.Pause();
+            //    //    Rig2D.constraints = RigidbodyConstraints2D.FreezeAll;
+            //    //});          
+            //    return;
+            //}
+            if(m_BindRocket)
+            {
+                m_BindRocket = false;
+                //派发火箭与女孩解除事件
+                GameEntry.Event.Fire(this, RocketWithGirlDetachEventArgs.Create());
             }
             if (m_Jump&&collision.relativeVelocity.magnitude > 1)
             {
                 m_Jump = false;
                 CollisionLogic(collision.transform.position, collision.collider as BoxCollider2D);                                            
-                GameEntry.Event.Fire(this, UpdateCameraFollowInfoEventArgs.Create(EnumCameraFollow.Girl));
+                GameEntry.Event.Fire(this, GirlTriggerCameraMoveEventArgs.Create(EnumGirlTriggerCameraMove.Jump));
+                TofuEntityLogic logic = collision.gameObject.GetComponent<TofuEntityLogic>();
+                if(logic!=null)
+                {
+                    switch(logic.TofuType)
+                    {
+                        case EnumTofu.DaoJu:
+                            {
+                                //目前只考虑火箭
+                                GameEntry.Event.Fire(this, RocketWithGirlBindEventArgs.Create());
+                                break;
+                            }
+                      
+                    }
+                }
             }
         }
         #region 碰撞判定
@@ -130,7 +158,7 @@ namespace Project.TofuGirl.Entity
         }
         #endregion
         protected override void OnPause()
-        {
+        { 
             base.OnPause();
 
         }

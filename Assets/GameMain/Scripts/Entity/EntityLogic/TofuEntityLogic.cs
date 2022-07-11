@@ -38,6 +38,7 @@ namespace Project.TofuGirl.Entity
         protected override void OnShow(object userData)
         {
             base.OnShow(userData);
+            
             m_Tread = false;
             Prefect=false;
             m_EntityData = userData as TofuEntityData;
@@ -49,7 +50,7 @@ namespace Project.TofuGirl.Entity
             {
                 Prefect =true;
                 //更新顶部豆腐Id
-                GameEntry.Event.Fire(this, UpdateTopTofuSerialldEventArgs.Create(Entity.Id));
+                GameEntry.Event.Fire(this, TopTofuIdUpdateEventArgs.Create(Entity.Id));
             }
             switch (m_EntityData.TofuType)
             {
@@ -61,9 +62,15 @@ namespace Project.TofuGirl.Entity
             }
             SkeAnim.GetComponent<MeshRenderer>().sortingOrder = m_EntityData.OrderInLayer;
             //更新当前豆腐Id事件
-            GameEntry.Event.Fire(this, UpdateNowTofuSerialldEventArgs.Create(Entity.Id));
+            GameEntry.Event.Fire(this, NowTofuIdUpdateEventArgs.Create(Entity.Id));
         }
 
+        protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
+        {
+            base.OnDetachFrom(parentEntity, userData);
+            //设置自己的层级
+            gameObject.SetLayerRecursively(9);
+        }
         protected override void OnHide(bool isShutdown, object userData)
         {
             if(isShutdown)
@@ -85,11 +92,13 @@ namespace Project.TofuGirl.Entity
             if (collision.relativeVelocity.magnitude > 1f)//防止生成时的碰撞导致播放抖动动画
             {
                 CollisionLogic(collision.transform.position);
-            }
+            }           
             m_Tread = true;
+            //更新顶部豆腐Id
+            GameEntry.Event.Fire(this, TopTofuIdUpdateEventArgs.Create(Entity.Id));
             //解除自身的父级实体           
             GameEntry.Entity.DetachEntity(Entity);
-            GameEntry.Event.Fire(this, TofuWithGirlCollisionEventArgs.Create());
+            //GameEntry.Event.Fire(this, TofuWithGirlCollisionEventArgs.Create());
         }
 
         private void OnCollisionExit2D(Collision2D collision)
@@ -147,6 +156,7 @@ namespace Project.TofuGirl.Entity
             Prefect = args.Prefect;
         }
         #endregion
+
         protected override void OnPause()
         {
             base.OnPause();

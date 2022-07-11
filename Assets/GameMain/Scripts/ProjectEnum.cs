@@ -1,5 +1,41 @@
 ﻿namespace Project.TofuGirl
 {
+    public enum EnumSender
+    {
+        /// <summary>
+        /// 默认
+        /// </summary>
+        Default,
+        /// <summary>
+        /// 女孩
+        /// </summary>
+        Girl,
+        /// <summary>
+        /// 豆腐
+        /// </summary>
+        Tofu,
+        /// <summary>
+        /// 相机
+        /// </summary>
+        Camera,
+        /// <summary>
+        /// 游戏管理器
+        /// </summary>
+        GM,
+        /// <summary>
+        /// 火箭
+        /// </summary>
+        Rocket,
+        /// <summary>
+        /// 舞台
+        /// </summary>
+        Stage
+    }
+    public enum EnumBattenDrive
+    {
+        Normal,
+        Rocket
+    }
     /// <summary>
     /// 相机跟随样式
     /// </summary>

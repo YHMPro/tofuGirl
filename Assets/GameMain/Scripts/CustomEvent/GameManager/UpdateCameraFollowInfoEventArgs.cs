@@ -16,17 +16,17 @@ namespace Project.TofuGirl.Event
         public override int Id => EventId;
         
         /// <summary>
-        /// 跟随样式
+        /// 发送类型
         /// </summary>
-        public EnumCameraFollow FollowType { get; private set; }
+        public EnumSender SenderType { get; private set; }
         public override void Clear()
         {
 
         }
-        public static UpdateCameraFollowInfoEventArgs Create(EnumCameraFollow followType)
+        public static UpdateCameraFollowInfoEventArgs Create(EnumSender senderType)
         {
             UpdateCameraFollowInfoEventArgs args = ReferencePool.Acquire<UpdateCameraFollowInfoEventArgs>();
-            args.FollowType = followType;
+            args.SenderType = senderType;
             return args;
         }
     }

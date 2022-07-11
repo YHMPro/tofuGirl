@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1805850190622795380}
   - component: {fileID: 1805850190622795383}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Middel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 930063333050412504}
   - component: {fileID: 4175255461327848264}
   - component: {fileID: 4440488705395070982}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 303176259272936035}
   - component: {fileID: 1573178420031281774}
   - component: {fileID: 6471268894975886397}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}

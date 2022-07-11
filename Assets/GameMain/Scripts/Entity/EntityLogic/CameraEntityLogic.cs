@@ -30,7 +30,6 @@ namespace Project.TofuGirl.Entity
             base.OnInit(userData);
             SelfCamera = GetComponent<Camera>();
             StaticCamera = new GameObject("StaticCamera").AddComponent<Camera>();
-            GameEntry.Event.Subscribe(SetCameraFollowInfoEventArgs.EventId, OnCameraFollowInfoUpdate);
         }
 
         protected override void OnShow(object userData)
@@ -40,8 +39,8 @@ namespace Project.TofuGirl.Entity
             SelfCamera.orthographicSize = 7;
             StaticCamera.orthographicSize = 7;
             StaticCamera.transform.position = transform.position;
-            StaticCamera.clearFlags = CameraClearFlags.SolidColor;
-            StaticCamera.cullingMask = 1;
+            StaticCamera.clearFlags = CameraClearFlags.SolidColor;            
+            StaticCamera.cullingMask = LayerMask.GetMask("StaticCamera");
             StaticCamera.orthographic = true;
             StaticCamera.orthographicSize = SelfCamera.orthographicSize;
             StaticCamera.depth = SelfCamera.depth - 1;
@@ -61,7 +60,6 @@ namespace Project.TofuGirl.Entity
         {
             if (isShutdown)
             {
-                GameEntry.Event.Unsubscribe(SetCameraFollowInfoEventArgs.EventId, OnCameraFollowInfoUpdate);
             }
             base.OnHide(isShutdown, userData);
         }
@@ -69,20 +67,15 @@ namespace Project.TofuGirl.Entity
         {
             
         }
-        private void OnCameraFollowInfoUpdate(object sender, GameEventArgs gEArgs)
+        public void GirlTriggerCameraMove(float delayTime, float speed,Vector3 aimPosition,EnumGirlTriggerCameraMove triggerType)
         {
-            SetCameraFollowInfoEventArgs args = gEArgs as SetCameraFollowInfoEventArgs;
-            if(args==null)
+            GameEntry.Coroutine.Delay(delayTime, () =>
             {
-                return;
-            }
-            m_AimPosition = args.AimPosition;
-            m_Speed=args.Speed;
-            GameEntry.Coroutine.Delay(args.DelayTime, () =>
-            {
-                switch (args.FollowType)
+                m_Speed = speed;
+                m_AimPosition = aimPosition;
+                switch (triggerType)
                 {
-                    case EnumCameraFollow.Girl:
+                    case EnumGirlTriggerCameraMove.Jump:
                         {
                             m_FollowAction = (elapseSeconds, realElapseSeconds) =>
                             {
@@ -94,21 +87,8 @@ namespace Project.TofuGirl.Entity
                             };
                             break;
                         }
-                    case EnumCameraFollow.Rocket:
+                    case EnumGirlTriggerCameraMove.Died:
                         {
-                            m_FollowAction = (elapseSeconds, realElapseSeconds) =>
-                            {
-                                transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * elapseSeconds);
-                                if (transform.position == m_AimPosition)
-                                {
-                                    m_FollowAction = null;
-                                }
-                            };
-                            break;
-                        }
-                    case EnumCameraFollow.Stage:
-                        {
-                            //判断一次女孩是否死亡(严谨的话)
                             Vector3 selfPosition = Vector3.zero;
                             float screenRate = (float)Screen.width / Screen.height;
                             m_FollowAction = (elapseSeconds, realElapseSeconds) =>
@@ -131,7 +111,25 @@ namespace Project.TofuGirl.Entity
                         }
                 }
             });
+        }
 
-        }    
+        public void RocketTriggerCameraMove(float delayTime, float speed, Vector3 aimPosition)
+        {
+            m_Speed = speed;
+            m_AimPosition = aimPosition;
+            GameEntry.Coroutine.Delay(delayTime, () => 
+            {
+                m_FollowAction = (elapseSeconds, realElapseSeconds) =>
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * elapseSeconds);
+                    if (transform.position == m_AimPosition)
+                    {
+                        m_FollowAction = null;
+                    }
+                };
+            });
+        }
+
+      
     }
 }
