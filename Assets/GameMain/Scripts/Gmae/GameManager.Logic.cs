@@ -8,12 +8,19 @@ namespace Project.TofuGirl
     /// </summary>
     public partial class GameManager
     {
-
         private float m_ElapseSeconds = 0;
         /// <summary>
         /// 台阶构建
         /// </summary>
         private bool m_StairGenerate = false;
+        /// <summary>
+        /// 台阶创建的时间
+        /// </summary>
+        private float m_StairGenerateTime = 0;
+        /// <summary>
+        /// 火箭与女孩绑定
+        /// </summary>
+        private bool m_RocketBindGirl = false;
         /// <summary>
         /// 状态轮询时调用(游戏更新)
         /// </summary>
@@ -37,7 +44,7 @@ namespace Project.TofuGirl
         private void StairGenerate(float elapseSeconds, float realElapseSeconds)
         {
             m_ElapseSeconds += elapseSeconds;
-            if (m_ElapseSeconds <= StairGenerateTime())//满足创建时间即可创建,受女孩死亡事件影响
+            if (m_ElapseSeconds <= m_StairGenerateTime)//满足创建时间即可创建,受女孩死亡事件影响
             {
                 return;
             }
@@ -46,7 +53,9 @@ namespace Project.TofuGirl
             BattenBridgeDataUpdate();
             TofuBridgeDataUpdate();
             #endregion
-
+            #region 台阶创建时间修改
+            StairGenerateTimeUpdate();
+            #endregion
             #region 台阶生成
             BuilderStairEntity();
             #endregion

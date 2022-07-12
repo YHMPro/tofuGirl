@@ -13,12 +13,6 @@ namespace Project.TofuGirl
     /// </summary>
     public partial class GameManager
     {
-        /// <summary>
-        /// 火箭与女孩绑定
-        /// </summary>
-        private bool m_RocketBindGirl = false;
-
-
         private void GMEventSubscribe()
         {
             //火箭与女孩的绑定或解除
@@ -146,7 +140,7 @@ namespace Project.TofuGirl
                         //速度
                         speed = 5;
                         //位置
-                        cameraAimPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y+0.7f;
+                        cameraAimPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y+ m_LData.BData.Interval;
                         cameraAimPosition.x = 0;
                         cameraAimPosition.z = -10;
                         //延迟
@@ -209,6 +203,8 @@ namespace Project.TofuGirl
             }
             m_RocketBindGirl = true;
             Log.Info("火箭与女孩的绑定");
+            //更新台阶创建时间
+            StairGenerateTimeUpdate();
             //更新火箭桥接数据
             RocketBridgeDataUpdate();
             //创建火箭

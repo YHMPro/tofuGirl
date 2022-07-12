@@ -33,6 +33,7 @@ namespace Project.TofuGirl.Entity
             base.OnInit(userData);
 
             GameEntry.Event.Subscribe(TofuPutEventArgs.EventId, OnTofuPut);
+            GameEntry.Event.Subscribe(TofuRecycleEventArgs.EventId, OnTofuRecycle);
         }
 
         protected override void OnShow(object userData)
@@ -54,9 +55,14 @@ namespace Project.TofuGirl.Entity
             }
             switch (m_EntityData.TofuType)
             {
-                case EnumTofu.DaoJu:
+                case EnumTofu.DaoJu: 
                     {
                         m_Anim.SetSkin("2");
+                        break;
+                    }
+                default:
+                    {
+                        m_Anim.SetSkin("1");
                         break;
                     }
             }
@@ -75,6 +81,7 @@ namespace Project.TofuGirl.Entity
         {
             if(isShutdown)
             {
+                GameEntry.Event.Unsubscribe(TofuRecycleEventArgs.EventId, OnTofuRecycle);
                 GameEntry.Event.Unsubscribe(TofuPutEventArgs.EventId, OnTofuPut);
             }
             base.OnHide(isShutdown, userData);
@@ -106,6 +113,32 @@ namespace Project.TofuGirl.Entity
             m_Tread = false;
         }
 
+        private void OnTofuRecycle(object sender,GameEventArgs gEArgs)
+        {
+            TofuRecycleEventArgs args = gEArgs as TofuRecycleEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            if(!gameObject.activeInHierarchy)
+            {
+                return;
+            }
+            //当自身Y轴+0.7<=args.ReferPosition.y时回收
+            if(transform.position.y+0.7f<= args.ReferPosition.y)
+            {
+                //缓存这个豆腐的部分数据
+                TofuCacheData cacheData = TofuCacheData.Create();
+                cacheData.Id = Entity.Id;
+                cacheData.Position = transform.position;
+                cacheData.Rotation = transform.eulerAngles;
+                cacheData.Prefect = Prefect;
+                TofuManager.AddCache(cacheData);
+                Log.Warning("回收id:{0},Prefect:{1}", cacheData.Id, cacheData.Prefect);
+                GameEntry.Entity.HideEntity(Entity);
+            }
+        }
+
         #region 碰撞判定
         private void CollisionLogic(Vector3 girlPosition)
         {
@@ -130,6 +163,7 @@ namespace Project.TofuGirl.Entity
                         tofuEntityLogic.PrefectAnim();
                         toFuEntityId = tofuEntityLogic.PrevId;
                     }
+                    Log.Info("豆腐最近连续完美数量(缓存中的):{0}", TofuManager.LatelySeriesPerfectCount);
                 }
             }
             else

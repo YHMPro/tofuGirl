@@ -1,5 +1,5 @@
-﻿#	关卡配置表				
-#	Id		GirlDataId	BattenDataId	RocketDataId
-#	int		int	int	int
-#	关卡Id	备注	女孩配置数据Id	木条配置数据Id	火箭配置Id
-	1001		1001	1001	1001
+﻿#	关卡配置表					
+#	Id		GirlDataId	BattenDataId	RocketDataId	TofuDataId
+#	int		int	int	int	int
+#	关卡Id	备注	女孩配置数据Id	木条配置数据Id	火箭配置Id	豆腐配置Id
+	1001		1001	1001	1001	1001

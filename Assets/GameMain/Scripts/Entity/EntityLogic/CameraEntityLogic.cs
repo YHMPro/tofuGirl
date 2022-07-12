@@ -83,6 +83,12 @@ namespace Project.TofuGirl.Entity
                                 if (transform.position == m_AimPosition)
                                 {
                                     m_FollowAction = null;
+                                    //触发豆腐回收事件
+                                    Vector3 selfPosition = Vector3.zero;
+                                    float screenRate = (float)Screen.width / Screen.height;
+                                    selfPosition = transform.position;
+                                    selfPosition.y -= SelfCamera.orthographicSize / screenRate / 2;
+                                    GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
                                 }
                             };
                             break;
@@ -125,6 +131,13 @@ namespace Project.TofuGirl.Entity
                     if (transform.position == m_AimPosition)
                     {
                         m_FollowAction = null;
+                        //触发豆腐回收事件
+                        //触发豆腐回收事件
+                        Vector3 selfPosition = Vector3.zero;
+                        float screenRate = (float)Screen.width / Screen.height;
+                        selfPosition = transform.position;
+                        selfPosition.y -= SelfCamera.orthographicSize / screenRate / 2;
+                        GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
                     }
                 };
             });

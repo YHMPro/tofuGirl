@@ -1,10 +1,5 @@
-﻿#	木条配置表										
-#	Id		SpeedBase	SpeedMin	SpeedMax	DirBase	DirMin	DirMax	CreateTimeBase	CreateTimeMin	CreateTimeMax
-#	int		float	float	float	int	int	int	float	float	float
-#	木条配置Id	备注	基础移动速度	叠加速度最小值	叠加速度最大值	基础方向概率(默认向左)	叠加方向概率最小值	叠加概率最大值	基础创建时间(s)	叠加创建时间最小值	叠加创建时间最大值
-	1001		2	0	3	50	-50	50	1.75	0	3
-	1002		2	0	3	50	-50	50	1	0	3
-	1003		2	0	3	50	-50	50	1	0	3
-	1004		2	0	3	50	-50	50	1	0	3
-	1005		2	0	3	50	-50	50	1	0	3
-	1006		2	0	3	50	-50	50	1	0	3
+﻿#	木条配置表								
+#	Id		SpeedBase	RocketAppendSpeed	LeftDir	RightDir	CreateTimeBase	RocketCreateTime	Interval
+#	int		float	float	int	int	float	float	float
+#	木条配置Id	备注	基础移动速度	火箭附加的速度	左方向概率	右方向概率	基础创建时间(s)	火箭影响下的创建时间	木条之间的创建间隔
+	1001		2	15	50	50	1.75	0.05	0.7

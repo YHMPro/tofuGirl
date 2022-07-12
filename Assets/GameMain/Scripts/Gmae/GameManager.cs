@@ -70,7 +70,7 @@ namespace Project.TofuGirl
 
             #region 火箭桥接数据
             gm.m_RBData = RocketBridgeData.Create();
-            gm.m_RBData.Speed = 15f;
+            gm.m_RBData.Speed = gm.m_LData.RData.Speed;
             #endregion
         }
         /// <summary>
@@ -157,20 +157,11 @@ namespace Project.TofuGirl
         /// <summary>
         /// 金色特殊豆腐
         /// </summary>
-        private int m_JinSeTeShuTofu = 0;//记录没有出现这种豆腐的的次数  每次出现都会重置
-
-        /// <summary>
-        /// 台阶构建时间
-        /// </summary>
-        private float m_StairGenerateTime = 0;
+        private int m_JinSeTeShuTofu = 0;//记录没有出现这种豆腐的的次数  每次出现都会重置       
         /// <summary>
         /// 木条移动速度
         /// </summary>
-        private float m_BattenSpeed = 0;
-
-
-
-        
+        private float m_BattenSpeed = 0;    
     }
     /// <summary>
     /// 游戏事件监听
@@ -324,7 +315,6 @@ namespace Project.TofuGirl
             {
                 case EnumSender.Rocket:
                     {
-                        Debug.Log(m_RBData.Speed);
                         //速度
                         speed = m_RBData.Speed;
                         //位置

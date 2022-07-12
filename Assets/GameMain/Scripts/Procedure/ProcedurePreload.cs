@@ -59,8 +59,6 @@ namespace Project.TofuGirl
             }
             #endregion        
             LoadData();
-            //ChangeState<ProcedureLevel>(procedureOwner);
-            //ChangeState<ProcedureLoadingScene>(procedureOwner);
             ChangeState<ProcedureMenu>(procedureOwner);
         }
 

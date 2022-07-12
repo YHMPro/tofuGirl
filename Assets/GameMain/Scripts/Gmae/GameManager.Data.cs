@@ -136,37 +136,38 @@ namespace Project.TofuGirl
 
             #region 火箭桥接数据
             m_RBData = RocketBridgeData.Create();
-            m_RBData.Speed = 0;
+            m_RBData.Speed = m_LData.RData.Speed;
             #endregion
         }
         #endregion
 
         #region 数据更新
-
-        /// <summary>
-        /// 台阶创建时间
-        /// </summary>
-        /// <returns></returns>
-        private float StairGenerateTime()
+        #region 台阶创建时间更新
+        private void StairGenerateTimeUpdate()
         {
-            float time = m_LData.BData.CreateTimeBase + m_StairGenerateTime;
-            return time;
+            //基础
+            m_StairGenerateTime = m_LData.BData.CreateTimeBase;
+            //其余逻辑影响 m_StairGenerateTime+=?
+
+            //火箭因素
+            m_StairGenerateTime= m_RocketBindGirl ? m_LData.BData.RocketCreateTime : m_StairGenerateTime;
         }
-
+        #endregion
         #region 木条桥接数据更新
-
         private void BattenBridgeDataUpdate()
         {
             //速度
             #region 速度判断逻辑
-            //火箭道具因素
             #endregion
-            m_BBData.Speed = m_LData.BData.SpeedBase + (m_RBData.Speed);//基础 + 火箭 + ?
+            m_BBData.Speed = m_LData.BData.SpeedBase;//基础 + 火箭 + ?
+            m_BBData.Speed += m_RocketBindGirl ? m_LData.BData.RocketAppendSpeed :0;//火箭附加的速度
+            //其余影响待......
+
+
             //左右方向
-            int leftDir = 50;
-            m_BBData.MoveType = RandRateTool.BattenMoveRandRate(leftDir, m_TotalRate - leftDir);
+            m_BBData.MoveType = RandRateTool.BattenMoveRandRate(m_LData.BData.LeftDir, m_LData.BData.RightDir);
             //位置
-            m_BBData.InitPosition.y = GameEntry.Entity.GetEntity(NowTofuSerialId).transform.position.y + 0.7f;
+            m_BBData.InitPosition.y = GameEntry.Entity.GetEntity(NowTofuSerialId).transform.position.y + m_LData.BData.Interval;
             m_BBData.InitPosition.x = 7f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
             //目标位置
             m_BBData.AimPosition.y = m_BBData.InitPosition.y;
@@ -193,10 +194,10 @@ namespace Project.TofuGirl
                 ++m_TeShuTofu;
                 ++m_JinSeTeShuTofu;
                 #region 金色特殊豆腐概率计算
-                if (m_JinSeTeShuTofu >= 4)
+                if (m_JinSeTeShuTofu >= m_LData.TDData.JinSheTeShuMin)
                 {
-                    //有百分之50%的概率出现  或 达到阈值:5
-                    if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_JinSeTeShuTofu >= 6))
+                    //有百分之50%的概率出现  或 达到阈值:
+                    if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_JinSeTeShuTofu >= m_LData.TDData.JinSheTeShuMax))
                     {
                         //生成金色特殊豆腐
                         m_JinSeTeShuTofu = 0;
@@ -208,10 +209,10 @@ namespace Project.TofuGirl
                 #endregion
 
                 #region 特殊豆腐概率计算
-                if ((m_JinSeTeShuTofu != 0) && (m_TeShuTofu >= 3))
+                if ((m_JinSeTeShuTofu != 0) && (m_TeShuTofu >= m_LData.TDData.TeShuMin))
                 {
                     //有百分之50%的概率出现  或 达到阈值:5
-                    if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_TeShuTofu >= 5))
+                    if ((RandRateTool.RandRate(new int[] { 50, 50 }, 100) == 1) || (m_TeShuTofu >= m_LData.TDData.TeShuMax))
                     {
                         //生成特殊豆腐
                         m_TeShuTofu = 0;
@@ -226,7 +227,7 @@ namespace Project.TofuGirl
             if ((m_JinSeTeShuTofu != 0) && (m_TeShuTofu != 0))
             {
                 //80%普通豆腐 20%道具豆腐   当触发道具时 100%普通豆腐  
-                if ((RandRateTool.RandRate(new int[] { 0, 100 }, 100) == 0) || m_RocketBindGirl)
+                if ((RandRateTool.RandRate(new int[] { m_LData.TDData.PuTong, m_LData.TDData.DaoJu }, 100) == 0) || m_RocketBindGirl)
                 {
                     //生成普通豆腐                   
                     //Log.Info("生成普通豆腐");
@@ -259,15 +260,13 @@ namespace Project.TofuGirl
         {
             //位置:当前顶部豆腐的位置 + 0.7f
             m_RBData.InitPosition.x = 0;
-            m_RBData.InitPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y + 0.7f;
+            m_RBData.InitPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y + m_LData.BData.Interval;
             m_RBData.InitRotation = Vector3.zero;
             //目标位置: 越过的数量*0.7+m_RBData.InitPosition.y
             m_RBData.AimPosition.x = 0;
-            m_RBData.AimPosition.y = m_LData.RData.TofuNum * 0.7f+ m_RBData.InitPosition.y;
+            m_RBData.AimPosition.y = m_LData.RData.TofuNum * m_LData.BData.Interval + m_RBData.InitPosition.y;
+            Log.Info("火箭跨越数量:{0},目标点:{1}", m_LData.RData.TofuNum, m_RBData.AimPosition);
             //速度
-            m_RBData.Speed = m_RocketBindGirl ? m_LData.RData.Speed:0;
-
-            Log.Info("火箭目标点:{0}",m_RBData.AimPosition);
         }
         #endregion
 

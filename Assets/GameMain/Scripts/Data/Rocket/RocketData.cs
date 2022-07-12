@@ -7,6 +7,10 @@ namespace Project.TofuGirl.Data
     {
         private DTRocket m_Rocket;
         /// <summary>
+        /// 火箭配置Id
+        /// </summary>
+        public int Id => m_Rocket.Id;
+        /// <summary>
         /// 飞行速度
         /// </summary>
         public float Speed => m_Rocket.BaseSpeed;

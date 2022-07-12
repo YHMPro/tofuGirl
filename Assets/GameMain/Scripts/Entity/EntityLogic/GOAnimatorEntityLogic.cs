@@ -26,7 +26,6 @@ namespace Project.TofuGirl.Entity
         /// </summary>
         public Rigidbody2D Rig2D { get; private set; }
 
-
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -54,17 +53,9 @@ namespace Project.TofuGirl.Entity
             {
                 return;
             }        
-        }
-
-        protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
-        {
-            base.OnUpdate(elapseSeconds, realElapseSeconds);
-
-        }
+        }      
         public override void Pause(object userData)
         {
-            Rig2D.constraints = RigidbodyConstraints2D.FreezeAll;
-            m_Anim.Pause();
             OnPause();
         }
 

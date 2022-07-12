@@ -12,10 +12,25 @@ public class CameraTest : MonoBehaviour
 
     private void Awake()
     {
-        m_Self = GetComponent<Camera>();
+        //m_Self = GetComponent<Camera>();
+        List<int> vs = new List<int>();
+        vs.Add(1);
+        vs.Add(2);
+        vs.Add(3);
+        vs.Add(4);
 
-
-
+        vs.Sort((a, b) =>
+        {
+            if(a>b)
+            {
+                return -1;
+            }
+            return 0;
+        });
+        foreach(int i in vs)
+        {
+            Debug.Log(i);
+        }
     }
 
 

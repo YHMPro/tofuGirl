@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2022-07-11 20:04:08.752
+// 生成时间：2022-07-12 12:33:48.009
 //------------------------------------------------------------
 
 using GameFramework;
@@ -46,45 +46,27 @@ namespace Project.TofuGirl
         }
 
         /// <summary>
-        /// 获取叠加速度最小值。
+        /// 获取火箭附加的速度。
         /// </summary>
-        public float SpeedMin
+        public float RocketAppendSpeed
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取叠加速度最大值。
+        /// 获取左方向概率。
         /// </summary>
-        public float SpeedMax
+        public int LeftDir
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取基础方向概率(默认向左)。
+        /// 获取右方向概率。
         /// </summary>
-        public int DirBase
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取叠加方向概率最小值。
-        /// </summary>
-        public int DirMin
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 获取叠加概率最大值。
-        /// </summary>
-        public int DirMax
+        public int RightDir
         {
             get;
             private set;
@@ -100,18 +82,18 @@ namespace Project.TofuGirl
         }
 
         /// <summary>
-        /// 获取叠加创建时间最小值。
+        /// 获取火箭影响下的创建时间。
         /// </summary>
-        public float CreateTimeMin
+        public float RocketCreateTime
         {
             get;
             private set;
         }
 
         /// <summary>
-        /// 获取叠加创建时间最大值。
+        /// 获取木条之间的创建间隔。
         /// </summary>
-        public float CreateTimeMax
+        public float Interval
         {
             get;
             private set;
@@ -130,14 +112,12 @@ namespace Project.TofuGirl
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             SpeedBase = float.Parse(columnStrings[index++]);
-            SpeedMin = float.Parse(columnStrings[index++]);
-            SpeedMax = float.Parse(columnStrings[index++]);
-            DirBase = int.Parse(columnStrings[index++]);
-            DirMin = int.Parse(columnStrings[index++]);
-            DirMax = int.Parse(columnStrings[index++]);
+            RocketAppendSpeed = float.Parse(columnStrings[index++]);
+            LeftDir = int.Parse(columnStrings[index++]);
+            RightDir = int.Parse(columnStrings[index++]);
             CreateTimeBase = float.Parse(columnStrings[index++]);
-            CreateTimeMin = float.Parse(columnStrings[index++]);
-            CreateTimeMax = float.Parse(columnStrings[index++]);
+            RocketCreateTime = float.Parse(columnStrings[index++]);
+            Interval = float.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -151,14 +131,12 @@ namespace Project.TofuGirl
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     SpeedBase = binaryReader.ReadSingle();
-                    SpeedMin = binaryReader.ReadSingle();
-                    SpeedMax = binaryReader.ReadSingle();
-                    DirBase = binaryReader.Read7BitEncodedInt32();
-                    DirMin = binaryReader.Read7BitEncodedInt32();
-                    DirMax = binaryReader.Read7BitEncodedInt32();
+                    RocketAppendSpeed = binaryReader.ReadSingle();
+                    LeftDir = binaryReader.Read7BitEncodedInt32();
+                    RightDir = binaryReader.Read7BitEncodedInt32();
                     CreateTimeBase = binaryReader.ReadSingle();
-                    CreateTimeMin = binaryReader.ReadSingle();
-                    CreateTimeMax = binaryReader.ReadSingle();
+                    RocketCreateTime = binaryReader.ReadSingle();
+                    Interval = binaryReader.ReadSingle();
                 }
             }
 

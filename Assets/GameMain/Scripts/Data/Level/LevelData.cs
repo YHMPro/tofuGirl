@@ -12,6 +12,10 @@ namespace Project.TofuGirl.Data
         public int GirlDataId => m_Level.GirlDataId;
 
         public int BattenDataId => m_Level.BattenDataId;
+
+        public int RocketDataId => m_Level.RocketDataId;
+
+        public int TofuDataId => m_Level.TofuDataId;
         /// <summary>
         /// 女孩数据
         /// </summary>
@@ -20,14 +24,22 @@ namespace Project.TofuGirl.Data
         /// 木条数据
         /// </summary>
         public BattenData BData { get; private set; }
-
+        /// <summary>
+        /// 火箭数据
+        /// </summary>
         public RocketData RData { get; private set; }
-        public LevelData(DTLevel dTLevel, GirlData girlData, BattenData battenData ,RocketData rocketData)
+        /// <summary>
+        /// 豆腐数据
+        /// </summary>
+        public TofuData TDData { get; private set; }
+
+        public LevelData(DTLevel dTLevel, GirlData girlData, BattenData battenData ,RocketData rocketData, TofuData tofuData)
         {
             m_Level = dTLevel;
             GData = girlData;
             BData = battenData;
             RData = rocketData;
+            TDData = tofuData;
         }
     }
 }

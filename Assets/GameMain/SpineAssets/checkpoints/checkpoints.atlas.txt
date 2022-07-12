@@ -1,0 +1,118 @@
+
+checkpoints.png
+size: 1656,807
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a1
+  rotate: false
+  xy: 449, 0
+  size: 639, 112
+  orig: 639, 113
+  offset: 0, 1
+  index: -1
+a2
+  rotate: true
+  xy: 1537, 138
+  size: 235, 119
+  orig: 235, 119
+  offset: 0, 0
+  index: -1
+a3
+  rotate: true
+  xy: 885, 371
+  size: 267, 97
+  orig: 267, 97
+  offset: 0, 0
+  index: -1
+a4
+  rotate: false
+  xy: 1090, 30
+  size: 425, 157
+  orig: 425, 157
+  offset: 0, 0
+  index: -1
+a5
+  rotate: false
+  xy: 1517, 55
+  size: 79, 81
+  orig: 79, 81
+  offset: 0, 0
+  index: -1
+bg
+  rotate: true
+  xy: 0, 271
+  size: 536, 521
+  orig: 536, 521
+  offset: 0, 0
+  index: -1
+bg2
+  rotate: false
+  xy: 1051, 375
+  size: 593, 432
+  orig: 593, 432
+  offset: 0, 0
+  index: -1
+bx
+  rotate: false
+  xy: 523, 282
+  size: 250, 217
+  orig: 250, 217
+  offset: 0, 0
+  index: -1
+bx2
+  rotate: true
+  xy: 885, 640
+  size: 167, 159
+  orig: 167, 159
+  offset: 0, 0
+  index: -1
+cd
+  rotate: false
+  xy: 449, 114
+  size: 600, 155
+  orig: 600, 155
+  offset: 0, 0
+  index: -1
+icon1
+  rotate: true
+  xy: 775, 426
+  size: 73, 79
+  orig: 74, 81
+  offset: 0, 1
+  index: -1
+icon2
+  rotate: false
+  xy: 775, 284
+  size: 251, 85
+  orig: 251, 85
+  offset: 0, 0
+  index: -1
+icon3
+  rotate: false
+  xy: 984, 564
+  size: 63, 74
+  orig: 63, 74
+  offset: 0, 0
+  index: -1
+icon_amazon
+  rotate: false
+  xy: 1051, 189
+  size: 484, 184
+  orig: 484, 184
+  offset: 0, 0
+  index: -1
+z1
+  rotate: true
+  xy: 523, 501
+  size: 306, 360
+  orig: 306, 360
+  offset: 0, 0
+  index: -1
+zz
+  rotate: true
+  xy: 0, 12
+  size: 257, 447
+  orig: 286, 481
+  offset: 14, 17
+  index: -1
