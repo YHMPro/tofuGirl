@@ -17,23 +17,13 @@ namespace Project.TofuGirl.Entity
         /// </summary>
         private int m_BindTofuId;    
         /// <summary>
-        /// 右点
-        /// </summary>
-        public Transform RightPoint { get; private set; }
-        /// <summary>
-        /// 左点
-        /// </summary>
-        public Transform LeftPoint { get; private set; }
-        /// <summary>
         /// 移动类型
         /// </summary>
         public EnumBattenMove MoveType => m_EntityData.MoveType;     
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
-            RightPoint = transform.GetChild(0);
-            LeftPoint = transform.GetChild(1);
-            m_SRenderer = transform.GetChild(2).GetComponent<SpriteRenderer>();
+            m_SRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
             GameEntry.Event.Subscribe(SetBattenMoveInfoEventArgs.EventId, OnBattenMoveInfo);
         }
 
@@ -100,7 +90,7 @@ namespace Project.TofuGirl.Entity
     
         private void Move(float elapseSeconds, float realElapseSeconds)
         {
-            transform.position = Vector3.MoveTowards(transform.position, m_EntityData.AimPosition, m_EntityData.Speed * elapseSeconds);//移动速度读取关卡配置表
+            transform.position = Vector3.MoveTowards(transform.position, m_EntityData.AimPosition, m_EntityData.Speed * realElapseSeconds);//移动速度读取关卡配置表
             if (m_EntityData.AimPosition == transform.position)
             {
                 m_MoveAction = null;

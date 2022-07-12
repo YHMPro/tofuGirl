@@ -33,10 +33,7 @@ namespace Project.TofuGirl
             GameEntry.Event.Subscribe(LevelEndEventArgs.EventId, OnLevelStart);
 
             GM = GameManager.Create(GameEntry.Data.GetData<DataLevel>().GetLevelData(1001));
-            //LevelStart = false;
-            //GController = GameController.Create(GameEntry.Data.GetData<DataLevel>().GetLevelData(1001));
             base.OnEnter(procedureOwner);
-            //GController.Start();
         }
 
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)

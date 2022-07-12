@@ -109,7 +109,8 @@ namespace Project.TofuGirl
 
             #region 豆腐桥接数据
             m_TBData = TofuBridgeData.Create();
-            m_TBData.InitPosition = new Vector3(0, -3.5f, 0);
+            m_TBData.InitPosition = new Vector3(0, -3f, 0);
+            m_TBData.InitRotation = Vector3.zero;
             m_TBData.FirstTofu = true;
             m_TBData.TofuType = EnumTofu.PuTong;
             m_TBData.PrevId = 0;
@@ -118,7 +119,7 @@ namespace Project.TofuGirl
             #region 女孩桥接数据
             m_GBData = GirlBridgeData.Create();
             m_GBData.Gravity = 1f;
-            m_GBData.InitPosition = new Vector3(0, -2.7f, 0);
+            m_GBData.InitPosition = new Vector3(0, -2.5f, 0);
             m_GBData.Speed = m_LData.GData.BaseSpeed;
             #endregion
 
@@ -137,6 +138,8 @@ namespace Project.TofuGirl
             #region 火箭桥接数据
             m_RBData = RocketBridgeData.Create();
             m_RBData.Speed = m_LData.RData.Speed;
+            m_RBData.InitRotation = Vector3.zero;
+            m_RBData.InitPosition = Vector3.zero;
             #endregion
         }
         #endregion
@@ -150,7 +153,10 @@ namespace Project.TofuGirl
             //其余逻辑影响 m_StairGenerateTime+=?
 
             //火箭因素
-            m_StairGenerateTime= m_RocketBindGirl ? m_LData.BData.RocketCreateTime : m_StairGenerateTime;
+            if(m_RocketBindGirl)
+            {
+                m_StairGenerateTime = m_LData.BData.RocketCreateTime;
+            }
         }
         #endregion
         #region 木条桥接数据更新
@@ -168,15 +174,15 @@ namespace Project.TofuGirl
             m_BBData.MoveType = RandRateTool.BattenMoveRandRate(m_LData.BData.LeftDir, m_LData.BData.RightDir);
             //位置
             m_BBData.InitPosition.y = GameEntry.Entity.GetEntity(NowTofuSerialId).transform.position.y + m_LData.BData.Interval;
-            m_BBData.InitPosition.x = 7f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
+            m_BBData.InitPosition.x = 5f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
             //目标位置
             m_BBData.AimPosition.y = m_BBData.InitPosition.y;
-            m_BBData.AimPosition.x = 1.85f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
+            m_BBData.AimPosition.x = 1.415f * ((EnumBattenMove.Left == m_BBData.MoveType) ? 1 : -1);
             Log.Info("木条信息=>木条速度:{0},木条方向:{1}", m_BBData.Speed, m_BBData.MoveType);
         }
         #endregion
 
-        #region 豆腐桥接数据更新
+        #region 豆腐桥接数据更新 
         /// <summary>
         /// 豆腐桥接数据更新
         /// </summary>
@@ -258,13 +264,14 @@ namespace Project.TofuGirl
         #region 火箭桥接数据更新
         private void RocketBridgeDataUpdate()
         {
-            //位置:当前顶部豆腐的位置 + 0.7f
+            //位置:当前顶部豆腐的位置
             m_RBData.InitPosition.x = 0;
             m_RBData.InitPosition.y = GameEntry.Entity.GetEntity(TopTofuSerialId).transform.position.y + m_LData.BData.Interval;
             m_RBData.InitRotation = Vector3.zero;
-            //目标位置: 越过的数量*0.7+m_RBData.InitPosition.y
+            //目标位置: 
             m_RBData.AimPosition.x = 0;
-            m_RBData.AimPosition.y = m_LData.RData.TofuNum * m_LData.BData.Interval + m_RBData.InitPosition.y;
+            m_RBData.AimPosition.y =  m_LData.RData.TofuNum * m_LData.BData.Interval + m_RBData.InitPosition.y;
+            m_RBData.AimPosition.z = 0;
             Log.Info("火箭跨越数量:{0},目标点:{1}", m_LData.RData.TofuNum, m_RBData.AimPosition);
             //速度
         }

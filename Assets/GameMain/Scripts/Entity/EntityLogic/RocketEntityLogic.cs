@@ -48,7 +48,6 @@ namespace Project.TofuGirl.Entity
             //两秒后起飞
             GameEntry.Coroutine.Delay(2f, () =>
             {
-                //SkeAnim.transform.DOLocalRotate(new Vector3(0,0,30),1f,)
                 //开启第二阶段动画
                 m_Anim.Play("animation2");
                 //开启台阶构建
@@ -68,12 +67,11 @@ namespace Project.TofuGirl.Entity
         }
 
 
-        private void Move(float elapseSeconds, float realElapseSeconds)
+        private void Move(float elapseSeconds, float realElapseSeconds)//0.6999999   20  
         {
-            transform.position = Vector3.MoveTowards(transform.position, m_EntityData.AimPosition, m_EntityData.Speed * elapseSeconds);//移动速度读取关卡配置表
+            transform.position = Vector3.MoveTowards(transform.position, m_EntityData.AimPosition, m_EntityData.Speed * realElapseSeconds);//移动速度读取关卡配置表
             if (m_EntityData.AimPosition == transform.position)
             {
-
                 m_MoveAction = null;
                 //关闭台阶构建
                 GameEntry.Event.Fire(this, CloseStairGenerateEventArgs.Create());

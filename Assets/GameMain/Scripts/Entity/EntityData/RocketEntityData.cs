@@ -11,10 +11,9 @@ namespace Project.TofuGirl.Entity
         public static RocketEntityData Create(RocketBridgeData bridgeData, object userData=null)
         {
             RocketEntityData rocketEntityData = ReferencePool.Acquire<RocketEntityData>();
-
             rocketEntityData.UserData = userData;
             rocketEntityData.Position = bridgeData.InitPosition;
-            rocketEntityData.Rotation = bridgeData.InitPosition;
+            rocketEntityData.Rotation = bridgeData.InitRotation;
             rocketEntityData.AimPosition = bridgeData.AimPosition;
             rocketEntityData.Speed = bridgeData.Speed;
             rocketEntityData.EntityType = EnumEntity.Rocket;

@@ -94,8 +94,7 @@ namespace Project.TofuGirl
             {
                 gm.GirlSerialId = girlEntity.Id;
             }, GirlEntityData.Create(gm.m_GBData));
-
-            gm.GameStart = true;
+            //gm.GameStart = true;
             Log.Info("暂时写这里，后续通过事件调控游戏开始:{0}", gm.GameStart);
         }
         /// <summary>
@@ -142,8 +141,8 @@ namespace Project.TofuGirl
 
 
         private const int m_TotalRate = 100;
-        private const float m_LeftPointToBattenCenterDis = -1.85f;
-        private const float m_RightPointToBattenCenterDis = 1.85f;
+        private const float m_LeftPointToBattenCenterDis = -1.415f;
+        private const float m_RightPointToBattenCenterDis = 1.415f;
 
         private int m_PuTongTofuTotal = 0;
         private int m_TeShuTofuTotal = 0;

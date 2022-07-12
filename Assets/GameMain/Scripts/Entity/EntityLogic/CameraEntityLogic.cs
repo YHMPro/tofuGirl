@@ -36,8 +36,8 @@ namespace Project.TofuGirl.Entity
         {
             base.OnShow(userData);
             m_FollowAction = null;
-            SelfCamera.orthographicSize = 7;
-            StaticCamera.orthographicSize = 7;
+            SelfCamera.orthographicSize = 5;
+            StaticCamera.orthographicSize = 5;
             StaticCamera.transform.position = transform.position;
             StaticCamera.clearFlags = CameraClearFlags.SolidColor;            
             StaticCamera.cullingMask = LayerMask.GetMask("StaticCamera");
@@ -79,7 +79,7 @@ namespace Project.TofuGirl.Entity
                         {
                             m_FollowAction = (elapseSeconds, realElapseSeconds) =>
                             {
-                                transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * elapseSeconds);
+                                transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * realElapseSeconds);
                                 if (transform.position == m_AimPosition)
                                 {
                                     m_FollowAction = null;
@@ -99,8 +99,8 @@ namespace Project.TofuGirl.Entity
                             float screenRate = (float)Screen.width / Screen.height;
                             m_FollowAction = (elapseSeconds, realElapseSeconds) =>
                             {
-                                transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * elapseSeconds);
-                                SelfCamera.orthographicSize += (m_Speed + 2) * elapseSeconds;
+                                transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * realElapseSeconds);
+                                SelfCamera.orthographicSize += (m_Speed + 2) * realElapseSeconds;
                                 selfPosition = transform.position;
                                 selfPosition.y -= SelfCamera.orthographicSize / screenRate / 2;
                                 if ((selfPosition - m_AimPosition).y <= 0)
@@ -127,16 +127,15 @@ namespace Project.TofuGirl.Entity
             {
                 m_FollowAction = (elapseSeconds, realElapseSeconds) =>
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * elapseSeconds);
+                    transform.position = Vector3.MoveTowards(transform.position, m_AimPosition, m_Speed * realElapseSeconds);
                     if (transform.position == m_AimPosition)
                     {
                         m_FollowAction = null;
-                        //触发豆腐回收事件
-                        //触发豆腐回收事件
                         Vector3 selfPosition = Vector3.zero;
                         float screenRate = (float)Screen.width / Screen.height;
                         selfPosition = transform.position;
                         selfPosition.y -= SelfCamera.orthographicSize / screenRate / 2;
+                        //触发豆腐回收事件
                         GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
                     }
                 };

@@ -2,4 +2,4 @@
 #	Id		PuTong	DaoJu	TeShuMin	TeShuMax	JinSheTeShuMin	JinSheTeShuMax
 #	int		int	int	int	int	int	int
 #	豆腐配置Id	备注	普通豆腐概率	道具豆腐概率	特殊豆腐触发最小值	特殊豆腐触发临界值	金色特殊豆腐触发最小值	金色特殊豆腐触发临界值
-	1001		100	0	3	5	4	6
+	1001		50	50	3	5	4	6

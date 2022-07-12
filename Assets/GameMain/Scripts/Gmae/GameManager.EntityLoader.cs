@@ -33,6 +33,7 @@ namespace Project.TofuGirl
             BuilderGirlEntity();//女孩
             //游戏开始
             GameStart = true;
+            Log.Info("暂时写这里，后续通过事件调控游戏开始:{0}", GameStart);
         }
         #endregion
         #region 实体加载   
@@ -99,7 +100,7 @@ namespace Project.TofuGirl
             {
                //与女孩绑定
                if(GameEntry.Entity.HasEntity(GirlSerialId))
-                {
+                {                     
                     GameEntry.Entity.AttachEntity(GirlSerialId, rocketEntity);
                 }
                 else

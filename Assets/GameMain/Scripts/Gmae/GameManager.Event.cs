@@ -145,7 +145,7 @@ namespace Project.TofuGirl
                         cameraAimPosition.z = -10;
                         //延迟
                         delay = 0;
-                        if(cameraAimPosition.y<=0)
+                        if(cameraAimPosition.y<= GameEntry.Entity.GetEntity(CameraSerialId).transform.position.y)
                         {
                             return;
                         }
@@ -209,8 +209,7 @@ namespace Project.TofuGirl
             RocketBridgeDataUpdate();
             //创建火箭
             BuilderRocketEntity();
-            //设置构建时间
-            m_StairGenerateTime = -1.7f;
+
         }
         /// <summary>
         /// 监听火箭与女孩解除

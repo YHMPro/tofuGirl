@@ -355,22 +355,16 @@
     <Compile Include="Assets\GameMain\Scripts\ProjectEnum.cs" />
     <Compile Include="Assets\GameMain\Scripts\ProjectInterface.cs" />
     <Compile Include="Assets\GameMain\Scripts\UI\Manager\FWindowManager.cs" />
+    <Compile Include="Assets\GameMain\Scripts\UI\PMainUI\com_main.cs" />
     <Compile Include="Assets\GameMain\Scripts\Utility\AssetUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\GameMain\SpineAssets\level\4\4_2\4_2.atlas.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\6\6_2\6_2.atlas.txt" />
     <None Include="Assets\GameMain\ThirdPartyTools\Spine\version.txt" />
     <None Include="Assets\GameMain\SpineAssets\level\1\1_2\1_2.atlas.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\2\2_2\2_2.atlas.txt" />
     <None Include="Assets\GameMain\SpineAssets\level\1\1_1\1_1.atlas.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\5\5\5_1.atlas.txt" />
     <None Include="Assets\GameMain\DataTables\PoolParam.txt" />
     <None Include="Assets\GameMain\Configs\EnumTemplate.txt" />
     <None Include="Assets\GameFramework\Libraries\GameFramework.dll" />
-    <None Include="Assets\GameMain\SpineAssets\level\4\4_2\4.atlas.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\2\2_1\2_1.atlas.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\3\3_1\3_1.atlas.txt" />
     <None Include="Assets\GameMain\DataTables\Girl.txt" />
     <None Include="Assets\GameFramework\Libraries\link.xml" />
     <None Include="Assets\GameMain\Configs\DefaultConfig.txt" />
@@ -380,10 +374,9 @@
     <None Include="Assets\GameFramework\Libraries\GameFramework.xml" />
     <None Include="Assets\GameMain\SpineAssets\rocket\rock.atlas.txt" />
     <None Include="Assets\GameMain\Configs\DataTableCodeTemplate.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\3\3_2\3_2.atlas.txt" />
     <None Include="Assets\GameMain\DataTables\Entity.txt" />
-    <None Include="Assets\GameMain\SpineAssets\level\6\6_1\6_1.atlas.txt" />
     <None Include="Assets\FairyGUI\Resources\Shaders\AddOn\FairyGUI-BlurFilter.shader" />
+    <None Include="Assets\GameMain\SpineAssets\level\1\1_1\6.atlas.txt" />
     <None Include="Assets\GameMain\SpineAssets\toufu\2.atlas.txt" />
     <None Include="Assets\FairyGUI\ReadMe - 4.3.0.txt" />
     <None Include="Assets\GameMain\SpineAssets\girl\girl.atlas.txt" />
@@ -394,9 +387,9 @@
     <None Include="Assets\GameMain\DataTables\Batten.txt" />
     <None Include="Assets\GameMain\SpineAssets\checkpoints\checkpoints.atlas.txt" />
     <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-BMFont.shader" />
-    <None Include="Assets\GameMain\SpineAssets\level\4\4_1\4_1.atlas.txt" />
     <None Include="Assets\FairyGUI\Extensions\TextMeshPro\Shaders\FairyGUI-TMP.shader" />
     <None Include="Assets\GameMain\DataTables\Tofu.txt" />
+    <None Include="Assets\GameMain\SpineAssets\level\1\1_3\6.atlas.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

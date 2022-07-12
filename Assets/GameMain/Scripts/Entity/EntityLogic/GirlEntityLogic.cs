@@ -11,7 +11,6 @@ namespace Project.TofuGirl.Entity
     {
         private GirlEntityData m_EntityData;
 
-        private Transform m_TopPoint;
         /// <summary>
         /// 绑定火箭
         /// </summary>
@@ -27,7 +26,6 @@ namespace Project.TofuGirl.Entity
         {
             m_Anim = new GirlAnimator();
             base.OnInit(userData);
-            m_TopPoint = transform.GetChild(0);
             GameEntry.Event.Subscribe(GirlBridgeDataChangeEventArgs.EventId, OnGirlBridgeDataChange);
         }
 
