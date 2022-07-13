@@ -51,8 +51,12 @@ namespace Project.TofuGirl
             GameEntry.Event.Subscribe(CloseStairGenerateEventArgs.EventId, OnCloseStairGenerate);
             //台阶构建成功
             GameEntry.Event.Subscribe(StairGenerateSuccessEventArgs.EventId, OnStairGenerateSuccess);
-            //木条撤销事件
-            //GameEntry.Event.Subscribe(BattenCancleEventArgs.EventId,)
+            //盾牌绑与女孩绑定或解除
+            GameEntry.Event.Subscribe(ShieldWithGirlBindEventArgs.EventId, OnShieldWithGirlBind);
+            GameEntry.Event.Subscribe(ShieldWithGirlDetachEventArgs.EventId, OnShieldWithGirlDetach);
+            //木条撤销成功
+            GameEntry.Event.Subscribe(BattenCancleSuccessEventArgs.EventId, OnBattenCancleSuccess);
+            //
         }
 
         private void GMEventUnsubscribe()
@@ -72,9 +76,27 @@ namespace Project.TofuGirl
             GameEntry.Event.Unsubscribe(CloseStairGenerateEventArgs.EventId, OnCloseStairGenerate);
             //台阶构建成功
             GameEntry.Event.Unsubscribe(StairGenerateSuccessEventArgs.EventId, OnStairGenerateSuccess);
+            //盾牌绑与女孩绑定或解除
+            GameEntry.Event.Unsubscribe(ShieldWithGirlBindEventArgs.EventId, OnShieldWithGirlBind);
+            GameEntry.Event.Unsubscribe(ShieldWithGirlDetachEventArgs.EventId, OnShieldWithGirlDetach);
+            //木条撤销成功
+            GameEntry.Event.Unsubscribe(BattenCancleSuccessEventArgs.EventId, OnBattenCancleSuccess);
+            //
         }
+        #region 监听木条撤销成功事件
+        private void OnBattenCancleSuccess(object sender, GameEventArgs gEArgs)
+        {
+            BattenCancleSuccessEventArgs args = gEArgs as BattenCancleSuccessEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            //m_StairGenerate = true;
+        }
+        #endregion
+
         #region 监听木条撤销事件
-        private void OnBattenCancle(object sender,GameEventArgs gEArgs)
+        private void OnBattenCancle(object sender, GameEventArgs gEArgs)
         {
             BattenCancleEventArgs args = gEArgs as BattenCancleEventArgs;
             if(args==null)
@@ -252,6 +274,9 @@ namespace Project.TofuGirl
                 return;
             }
             m_ShieldBindGirl = false;
+            NowTofuSerialId = TopTofuSerialId;
+            //撤销此时正在移动的木条
+            GameEntry.Event.Fire(this, BattenCancleEventArgs.Create());
             Log.Info("护盾与女孩解除");
         }
         #endregion
@@ -273,6 +298,9 @@ namespace Project.TofuGirl
             m_RocketBindGirl = true;
             m_RocketTriggerTofuNum = 0;//重置
             Log.Info("火箭与女孩的绑定");
+            NowTofuSerialId = TopTofuSerialId;
+            //撤销此时正在移动的木条
+            GameEntry.Event.Fire(this, BattenCancleEventArgs.Create());
             //更新台阶创建时间
             StairGenerateTimeUpdate();
             //更新火箭桥接数据

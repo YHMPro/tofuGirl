@@ -293,9 +293,9 @@ namespace Project.TofuGirl
         private void ShieldBridgeDataUpdate()
         {
             //位置
-            m_RBData.InitPosition.x = 0;
-            m_RBData.InitPosition.y = GameEntry.Entity.GetEntity(GirlSerialId).transform.position.y;
-            m_RBData.InitRotation = Vector3.zero;
+            m_ShieldBData.InitPosition.x = 0;
+            m_ShieldBData.InitPosition.y = GameEntry.Entity.GetEntity(GirlSerialId).transform.position.y;
+            m_ShieldBData.InitRotation = Vector3.zero;
         }
         #endregion
         #endregion

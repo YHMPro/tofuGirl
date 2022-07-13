@@ -121,7 +121,7 @@ namespace Project.TofuGirl
                 //与女孩绑定
                 if (GameEntry.Entity.HasEntity(GirlSerialId))
                 {
-                    GameEntry.Entity.AttachEntity(GirlSerialId, shieldEntity);
+                    GameEntry.Entity.AttachEntity(shieldEntity, GirlSerialId);
                 }               
             }, ShieldEntityData.Create(m_ShieldBData));
         }

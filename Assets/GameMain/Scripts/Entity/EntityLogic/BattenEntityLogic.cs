@@ -80,17 +80,26 @@ namespace Project.TofuGirl.Entity
             {
                 return;
             }
-            //平移移出屏幕后执行一下操作
-
-            //解除子实体          
-            GameEntry.Entity.DetachEntity(m_BindTofuId);
-            //豆腐管理中弹出第一个  待考虑
-
-            //隐藏子实体
-            GameEntry.Entity.HideEntity(m_BindTofuId);
-            //隐藏自身
-            GameEntry.Entity.HideEntity(Entity);
+            if(!gameObject.activeInHierarchy)
+            {
+                return;
+            }
+            m_MoveAction = CancleMove;
         } 
+        private void CancleMove(float elapseSeconds, float realElapseSeconds)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, m_EntityData.Position, 7 * realElapseSeconds);//撤销移动速度后续读取关卡配置表
+            if (m_EntityData.Position == transform.position)
+            {
+                m_MoveAction = null;
+                //解除子实体          
+                GameEntry.Entity.DetachEntity(m_BindTofuId);
+                //隐藏子实体
+                GameEntry.Entity.HideEntity(m_BindTofuId);
+                //派发撤销成功事件
+                GameEntry.Event.Fire(this, BattenCancleSuccessEventArgs.Create());               
+            }
+        }
         private void Move(float elapseSeconds, float realElapseSeconds)
         {
             transform.position = Vector3.MoveTowards(transform.position, m_EntityData.AimPosition, m_EntityData.Speed * realElapseSeconds);//移动速度读取关卡配置表

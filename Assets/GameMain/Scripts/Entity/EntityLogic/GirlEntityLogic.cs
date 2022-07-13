@@ -47,6 +47,7 @@ namespace Project.TofuGirl.Entity
         protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
         {
             base.OnAttachTo(parentEntity, parentTransform, userData);
+           
             m_BindRocket = true;
             Rig2D.isKinematic = true;
             m_Jump = true;
