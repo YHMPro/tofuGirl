@@ -58,7 +58,7 @@ namespace Project.TofuGirl.Entity
             base.OnDetachFrom(parentEntity, userData);
             Rig2D.isKinematic = false;
             //添加一个速度
-            Rig2D.velocity = new Vector3(0, (parentEntity as RocketEntityLogic).Speed/2f, 0);
+            Rig2D.velocity = new Vector3(0, (parentEntity as RocketEntityLogic).Speed, 0);
         }
         protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
@@ -124,6 +124,8 @@ namespace Project.TofuGirl.Entity
                             {
                                 //目前只考虑火箭
                                 GameEntry.Event.Fire(this, RocketWithGirlBindEventArgs.Create());
+                                //GameEntry.Event.Fire(this, ShieldWithGirlBindEventArgs.Create());
+                                //依照概率进行分配
                                 break;
                             }
                       

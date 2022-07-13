@@ -26,72 +26,57 @@ namespace Project.TofuGirl
     // 数据 : Id、位置、旋转
     public class TofuManager
     {
-        private static List<TofuCacheData> m_CacheLi = new List<TofuCacheData>();
-        private static Stack<TofuCacheData> m_Caches = new Stack<TofuCacheData>();
         /// <summary>
-        /// 最近连续完美的数量
+        /// 豆腐缓存数据队列
         /// </summary>
-        public static int LatelySeriesPerfectCount
+        private static Queue<TofuCacheData> m_TofuCacheDataQu = new Queue<TofuCacheData>();
+        /// <summary>
+        /// 连续完美的个数
+        /// </summary>
+        public static int PrefectCount
         {
             get
             {
-                return InquireLatelySeriesPerfectNum();
+                int prefectNum = 0;
+                foreach (TofuCacheData data in m_TofuCacheDataQu)
+                {
+                    if(!data.Prefect)
+                    {
+                        return prefectNum;
+                    }
+                    prefectNum++;
+                }
+                return prefectNum;
             }
         }
         /// <summary>
-        /// 缓存数量
+        /// 豆腐缓存数据个数
         /// </summary>
-        public static int Count 
+        public static int Count => m_TofuCacheDataQu.Count;
+        /// <summary>
+        /// 添加豆腐缓存数据
+        /// </summary>
+        /// <param name="tofuCacheData"></param>
+        public static void Enqueue(TofuCacheData tofuCacheData)
         {
-            get
-            {
-                return m_Caches.Count;
-            }
+            
+            m_TofuCacheDataQu.Enqueue(tofuCacheData);
         }
-
-        public static void AddCache(TofuCacheData cacheData)
-        {          
-            m_CacheLi.Add(cacheData);
-        }
-
-        public static TofuCacheData GetCache(int index)
+        /// <summary>
+        /// 取出首位豆腐缓存数据
+        /// </summary>
+        /// <returns></returns>
+        public static TofuCacheData Dequeue()
         {
-            return m_Caches.Pop();
+            return m_TofuCacheDataQu.Dequeue();
         }
-        
-
-        private static int InquireLatelySeriesPerfectNum()
+        /// <summary>
+        /// 查看首位豆腐缓存数据
+        /// </summary>
+        /// <returns></returns>
+        public static TofuCacheData Peek()
         {
-            int num = 0;
-            //排序一次  依照id  从小到大排序
-            m_CacheLi.Sort((a, b) =>
-            {
-                if (a.Id > b.Id)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 0;
-                }
-            });
-            foreach(TofuCacheData data in m_CacheLi) 
-            {
-                m_Caches.Push(data);
-            }
-            m_CacheLi.Clear();
-
-            foreach (TofuCacheData data in m_Caches)
-            {
-                Log.Warning("Id:{0}", data.Id);
-                if (!data.Prefect)
-                {
-                    return num;
-                }
-                num++;
-            }     
-            return num;
+            return m_TofuCacheDataQu.Peek();
         }
-
     }
 }

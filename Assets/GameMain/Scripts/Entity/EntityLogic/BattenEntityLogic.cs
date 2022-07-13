@@ -24,7 +24,7 @@ namespace Project.TofuGirl.Entity
         {
             base.OnInit(userData);
             m_SRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-            GameEntry.Event.Subscribe(SetBattenMoveInfoEventArgs.EventId, OnBattenMoveInfo);
+            GameEntry.Event.Subscribe(BattenCancleEventArgs.EventId, OnBattenCancle);
         }
 
         protected override void OnShow(object userData)
@@ -48,6 +48,8 @@ namespace Project.TofuGirl.Entity
             m_BindTofuId = childEntity.Entity.Id;
             m_SRenderer.sortingOrder = (childEntity as TofuEntityLogic).OrderInLayer - 1;
             m_MoveAction = Move;
+            //发送台阶构建成功事件
+            GameEntry.Event.Fire(this, StairGenerateSuccessEventArgs.Create());
         }
 
         protected override void OnDetached(EntityLogic childEntity, object userData)
@@ -61,33 +63,34 @@ namespace Project.TofuGirl.Entity
         {   
             if(isShutdown)
             {
-                GameEntry.Event.Unsubscribe(SetBattenMoveInfoEventArgs.EventId, OnBattenMoveInfo);
+                GameEntry.Event.Unsubscribe(BattenCancleEventArgs.EventId, OnBattenCancle);
             }
             base.OnHide(isShutdown, userData);
         }
 
-        private void OnBattenMoveInfo(object sender, GameEventArgs gEArgs)
-        {
-            SetBattenMoveInfoEventArgs args = gEArgs as SetBattenMoveInfoEventArgs;
-            if (args == null)
-            {
-                return;
-            }
-            if (args.Move)
-            {
-                m_MoveAction = Move;
-            }
-            else
-            {
-                m_MoveAction = null;
-            }
-            Log.Info(1);
-        }
+      
         public override void Pause(object userData)
         {
            
         }
-    
+        private void OnBattenCancle(object sender,GameEventArgs gEArgs)
+        {
+            BattenCancleEventArgs args = gEArgs as BattenCancleEventArgs;
+            if(args==null)
+            {
+                return;
+            }
+            //平移移出屏幕后执行一下操作
+
+            //解除子实体          
+            GameEntry.Entity.DetachEntity(m_BindTofuId);
+            //豆腐管理中弹出第一个  待考虑
+
+            //隐藏子实体
+            GameEntry.Entity.HideEntity(m_BindTofuId);
+            //隐藏自身
+            GameEntry.Entity.HideEntity(Entity);
+        } 
         private void Move(float elapseSeconds, float realElapseSeconds)
         {
             transform.position = Vector3.MoveTowards(transform.position, m_EntityData.AimPosition, m_EntityData.Speed * realElapseSeconds);//移动速度读取关卡配置表

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{4EDC1839-70D4-67E3-3C52-4BA03BD651F5}</ProjectGuid>
+    <ProjectGuid>{A2AC78A7-0996-A7E2-450C-0ADB424FB755}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -223,11 +223,13 @@
     <Compile Include="Assets\GameMain\Scripts\BridgeData\GirlBridgeData.cs" />
     <Compile Include="Assets\GameMain\Scripts\BridgeData\LevelBridgeData.cs" />
     <Compile Include="Assets\GameMain\Scripts\BridgeData\RocketBridgeData.cs" />
+    <Compile Include="Assets\GameMain\Scripts\BridgeData\ShieldBridgeData.cs" />
     <Compile Include="Assets\GameMain\Scripts\BridgeData\StageBirdgeData.cs" />
     <Compile Include="Assets\GameMain\Scripts\BridgeData\TofuBridgeData.cs" />
     <Compile Include="Assets\GameMain\Scripts\CameraTest.cs" />
     <Compile Include="Assets\GameMain\Scripts\Collision\CollisionLogic.cs" />
     <Compile Include="Assets\GameMain\Scripts\Coroutine\CoroutineComponent.cs" />
+    <Compile Include="Assets\GameMain\Scripts\CustomEvent\Batten\BattenCancleEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Batten\SetBattenMoveInfoEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\BattenMoveEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Camera\CameraMoveEventArgs.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\GameOverEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\NowTofuIdUpdateEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\OpenStairGenerateEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\StairGenerateSuccessEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\TopTofuIdUpdateEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\UpdateBattenMoveInfoEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\GameManager\UpdateCameraFollowEventArgs.cs" />
@@ -254,8 +257,11 @@
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\LevelStartEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Rocket\GirlReliefRocketEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Rocket\RocketTriggerCameraMoveEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\CustomEvent\Rocket\RocketTriggerStairGenerateEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Rocket\RocketWithGirlBindEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Rocket\RocketWithGirlDetachEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\CustomEvent\Shield\ShieldWithGirlBindEventArgs.cs" />
+    <Compile Include="Assets\GameMain\Scripts\CustomEvent\Shield\ShieldWithGirlDetachEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\Tofu\TofuRecycleEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\TofuPutEventArgs.cs" />
     <Compile Include="Assets\GameMain\Scripts\CustomEvent\TofuWithGirlCollisionEventArgs.cs" />
@@ -361,10 +367,15 @@
   <ItemGroup>
     <None Include="Assets\GameMain\ThirdPartyTools\Spine\version.txt" />
     <None Include="Assets\GameMain\SpineAssets\level\1\1_2\1_2.atlas.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\Girl.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\Level.txt" />
     <None Include="Assets\GameMain\SpineAssets\level\1\1_1\1_1.atlas.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\Rocket.txt" />
     <None Include="Assets\GameMain\DataTables\PoolParam.txt" />
     <None Include="Assets\GameMain\Configs\EnumTemplate.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\EntityGroup.txt" />
     <None Include="Assets\GameFramework\Libraries\GameFramework.dll" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\AssetsPath.txt" />
     <None Include="Assets\GameMain\DataTables\Girl.txt" />
     <None Include="Assets\GameFramework\Libraries\link.xml" />
     <None Include="Assets\GameMain\Configs\DefaultConfig.txt" />
@@ -376,19 +387,23 @@
     <None Include="Assets\GameMain\Configs\DataTableCodeTemplate.txt" />
     <None Include="Assets\GameMain\DataTables\Entity.txt" />
     <None Include="Assets\FairyGUI\Resources\Shaders\AddOn\FairyGUI-BlurFilter.shader" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\PoolParam.txt" />
     <None Include="Assets\GameMain\SpineAssets\level\1\1_1\6.atlas.txt" />
     <None Include="Assets\GameMain\SpineAssets\toufu\2.atlas.txt" />
     <None Include="Assets\FairyGUI\ReadMe - 4.3.0.txt" />
     <None Include="Assets\GameMain\SpineAssets\girl\girl.atlas.txt" />
     <None Include="Assets\GameFramework\Libraries\ICSharpCode.SharpZipLib.dll" />
     <None Include="Assets\GameMain\DataTables\Rocket.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\Batten.txt" />
     <None Include="Assets\GameMain\DataTables\AssetsPath.txt" />
     <None Include="Assets\GameMain\DataTables\EntityGroup.txt" />
     <None Include="Assets\GameMain\DataTables\Batten.txt" />
     <None Include="Assets\GameMain\SpineAssets\checkpoints\checkpoints.atlas.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\Entity.txt" />
     <None Include="Assets\FairyGUI\Resources\Shaders\FairyGUI-BMFont.shader" />
     <None Include="Assets\FairyGUI\Extensions\TextMeshPro\Shaders\FairyGUI-TMP.shader" />
     <None Include="Assets\GameMain\DataTables\Tofu.txt" />
+    <None Include="Assets\GameMain\Scripts\CustomEvent\DataTables\Tofu.txt" />
     <None Include="Assets\GameMain\SpineAssets\level\1\1_3\6.atlas.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -962,23 +977,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{5A2F21C7-3BAC-279C-2D8E-31BA1CD2DE74}</Project>
+      <Project>{1BBE0BEF-4FE8-A3A0-095A-86B00AAF5800}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
     <ProjectReference Include="UnityGameFramework.Runtime.csproj">
-      <Project>{53879528-6E79-AB1F-CB9B-EF7B0B123FA3}</Project>
+      <Project>{BAAA2F49-4CE0-39C9-F09B-F56B13D26D93}</Project>
       <Name>UnityGameFramework.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="UnityGameFramework.Editor.csproj">
-      <Project>{AAC91E95-0113-A404-6C69-B75FD68050E5}</Project>
+      <Project>{E9C16D3D-76AF-42B1-26D5-81869CF500F3}</Project>
       <Name>UnityGameFramework.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="spine-unity.csproj">
-      <Project>{16EB57EF-C5BA-DB1C-281B-38C62C1295F3}</Project>
+      <Project>{1A691145-002D-3E56-2143-5F10C0B5A872}</Project>
       <Name>spine-unity</Name>
     </ProjectReference>
     <ProjectReference Include="spine-unity-editor.csproj">
-      <Project>{2EFBA394-A31C-05C7-4035-62FAABBEA44C}</Project>
+      <Project>{AFB876B4-FFD4-2B1F-C66E-24B74996E04E}</Project>
       <Name>spine-unity-editor</Name>
     </ProjectReference>
   </ItemGroup>

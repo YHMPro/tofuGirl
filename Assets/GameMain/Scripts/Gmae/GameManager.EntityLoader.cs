@@ -5,6 +5,8 @@ using UnityEngine.Events;
 using UnityGameFramework.Runtime;
 using Project.TofuGirl.Data;
 using Project.TofuGirl.Entity;
+using UnityEngine;
+using System.Collections.Generic;
 namespace Project.TofuGirl
 {
     /// <summary>
@@ -103,11 +105,58 @@ namespace Project.TofuGirl
                 {                     
                     GameEntry.Entity.AttachEntity(GirlSerialId, rocketEntity);
                 }
-                else
+                if (GameEntry.Entity.HasEntity(CameraSerialId))
                 {
-                    GameEntry.Entity.HideEntity(rocketEntity);
+                    GameEntry.Entity.AttachEntity(CameraSerialId, rocketEntity);
                 }
             }, RocketEntityData.Create(m_RBData));
+        }
+        /// <summary>
+        /// 构建护盾实体
+        /// </summary>
+        private void BuilderShieldEntity()
+        {
+            m_ELoader.ShowEntity<ShieldEntityLogic>(GameEntry.Entity.GenerateSerialId(), Constant.EntityId.Shield, (shieldEntity) =>
+            {
+                //与女孩绑定
+                if (GameEntry.Entity.HasEntity(GirlSerialId))
+                {
+                    GameEntry.Entity.AttachEntity(GirlSerialId, shieldEntity);
+                }               
+            }, ShieldEntityData.Create(m_ShieldBData));
+        }
+        #endregion
+
+        #region 实体回收
+        
+        /// <summary>
+        /// 豆腐实体自动回收
+        /// </summary>
+        private void TofuEntityAutoRecycle()
+        {
+            //规则  依据当前的豆腐向下遍历判断每个豆腐与相机的距离是否大于等于相机的高的一半            
+            int dofuId = NowTofuSerialId;
+            CameraEntityLogic cameraLogic = GameEntry.Entity.GetEntity(CameraSerialId).Logic as CameraEntityLogic;
+            float referDis = cameraLogic.SelfCamera.orthographicSize / ((float)Screen.width / Screen.height) / 2 + m_LData.BData.Interval;            
+            while (GameEntry.Entity.HasEntity(dofuId))
+            {               
+                TofuEntityLogic tofuLogic = GameEntry.Entity.GetEntity(dofuId).Logic as TofuEntityLogic;
+                if (Vector2.Distance(cameraLogic.transform.position, tofuLogic.transform.position) >= referDis)
+                {
+                    //回收豆腐  
+                    TofuCacheData tofuCacheData = TofuCacheData.Create();
+                    tofuCacheData.Position = tofuLogic.transform.position;
+                    tofuCacheData.Rotation = tofuLogic.transform.eulerAngles;
+                    tofuCacheData.Id = dofuId;
+                    tofuCacheData.Prefect = tofuLogic.Prefect;
+                    //将豆腐缓存数据添加到托管队列中
+                    TofuManager.Enqueue(tofuCacheData);
+                    //隐藏实体
+                    GameEntry.Entity.HideEntity(dofuId);
+                }
+                dofuId = tofuLogic.PrevId;   
+                
+            }
         }
         #endregion
     }

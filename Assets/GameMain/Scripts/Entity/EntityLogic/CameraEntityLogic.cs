@@ -88,7 +88,7 @@ namespace Project.TofuGirl.Entity
                                     float screenRate = (float)Screen.width / Screen.height;
                                     selfPosition = transform.position;
                                     selfPosition.y -= SelfCamera.orthographicSize / screenRate / 2;
-                                    GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
+                                    //GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
                                 }
                             };
                             break;
@@ -136,7 +136,7 @@ namespace Project.TofuGirl.Entity
                         selfPosition = transform.position;
                         selfPosition.y -= SelfCamera.orthographicSize / screenRate / 2;
                         //触发豆腐回收事件
-                        GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
+                        //GameEntry.Event.Fire(this, TofuRecycleEventArgs.Create(selfPosition));
                     }
                 };
             });

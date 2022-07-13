@@ -9,6 +9,7 @@ namespace Project.TofuGirl.Data
         public Vector3 AimPosition;
 
         public float Speed;
+        public int TofuNum;
 
         public static RocketBridgeData Create()
         {

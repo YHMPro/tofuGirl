@@ -18,6 +18,8 @@ namespace Project
             public const int StageId_1 = 1005;
 
             public const int RocketId = 1006;
+
+            public const int Shield = 1007;
         }
     }
 }

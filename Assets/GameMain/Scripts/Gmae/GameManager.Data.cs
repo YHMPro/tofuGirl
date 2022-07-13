@@ -41,6 +41,10 @@ namespace Project.TofuGirl
 
         #region 桥接数据
         /// <summary>
+        /// 护盾桥接数据(豆腐道具)
+        /// </summary>
+        private ShieldBridgeData m_ShieldBData;
+        /// <summary>
         /// 火箭桥接数据(豆腐道具)
         /// </summary>
         private RocketBridgeData m_RBData;
@@ -79,6 +83,7 @@ namespace Project.TofuGirl
             GameStart = false;
             GameOver = false;
             m_StairGenerate = true;
+            m_StairGenerateSuccess = true;
 
             CameraSerialId = 0;
             GirlSerialId = 0;
@@ -101,6 +106,7 @@ namespace Project.TofuGirl
 
         private void BridgeDataInit()
         {
+
             #region 舞台桥接数据
             m_SBData = StageBirdgeData.Create();
             m_SBData.InitPosition = Vector3.zero;
@@ -118,7 +124,7 @@ namespace Project.TofuGirl
 
             #region 女孩桥接数据
             m_GBData = GirlBridgeData.Create();
-            m_GBData.Gravity = 1f;
+            m_GBData.Gravity = 1.5f;
             m_GBData.InitPosition = new Vector3(0, -2.5f, 0);
             m_GBData.Speed = m_LData.GData.BaseSpeed;
             #endregion
@@ -138,8 +144,15 @@ namespace Project.TofuGirl
             #region 火箭桥接数据
             m_RBData = RocketBridgeData.Create();
             m_RBData.Speed = m_LData.RData.Speed;
+            m_RBData.TofuNum = m_LData.RData.TofuNum;
             m_RBData.InitRotation = Vector3.zero;
             m_RBData.InitPosition = Vector3.zero;
+            #endregion
+
+            #region 护盾桥接数据
+            m_ShieldBData = ShieldBridgeData.Create();
+            m_ShieldBData.InitPosition = Vector3.zero;
+            m_ShieldBData.InitRotation = Vector3.zero;
             #endregion
         }
         #endregion
@@ -242,7 +255,7 @@ namespace Project.TofuGirl
                 }
                 else
                 {
-                    m_StairGenerate = false;//停止台阶的生成 但当前台阶还是会生成
+                    //m_StairGenerate = false;//停止台阶的生成 但当前台阶还是会生成
                     //生成道具豆腐
                     //Log.Info("生成道具豆腐");
                     m_TBData.TofuType = EnumTofu.DaoJu;
@@ -276,7 +289,15 @@ namespace Project.TofuGirl
             //速度
         }
         #endregion
-
+        #region 护盾桥接数据更新
+        private void ShieldBridgeDataUpdate()
+        {
+            //位置
+            m_RBData.InitPosition.x = 0;
+            m_RBData.InitPosition.y = GameEntry.Entity.GetEntity(GirlSerialId).transform.position.y;
+            m_RBData.InitRotation = Vector3.zero;
+        }
+        #endregion
         #endregion
 
         #endregion

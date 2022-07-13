@@ -1,0 +1,10 @@
+﻿#	实体配置表				
+#	Id		Name	AssetId	EntityGroupId
+#	int		string	int	int
+#	实体Id	备注	实体名称	实体资源ID	实体组Id
+	1001	女孩	Girl	1001	1001
+	1002	豆腐	Tofo	1002	1002
+	1003	木条	Batten	1003	1003
+	1004	相机	Camera	1004	1004
+	1005	舞台1	Stage1	1005	1005
+	1006	火箭	Rocket	1006	1006

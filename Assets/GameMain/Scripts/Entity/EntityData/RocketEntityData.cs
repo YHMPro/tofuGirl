@@ -8,6 +8,8 @@ namespace Project.TofuGirl.Entity
     {
         public Vector3 AimPosition { get; private set; }
         public float Speed { get; private set; }
+
+        public int TofuNum { get; private set; }
         public static RocketEntityData Create(RocketBridgeData bridgeData, object userData=null)
         {
             RocketEntityData rocketEntityData = ReferencePool.Acquire<RocketEntityData>();
@@ -16,6 +18,7 @@ namespace Project.TofuGirl.Entity
             rocketEntityData.Rotation = bridgeData.InitRotation;
             rocketEntityData.AimPosition = bridgeData.AimPosition;
             rocketEntityData.Speed = bridgeData.Speed;
+            rocketEntityData.TofuNum = bridgeData.TofuNum;
             rocketEntityData.EntityType = EnumEntity.Rocket;
 
             return rocketEntityData;

@@ -9,6 +9,7 @@
 	1004	相机预制	Assets/GameMain/Entitys/Camera.prefab	0
 	1005	舞台预制	Assets/GameMain/Entitys/Stage1.prefab	0
 	1006	火箭预制	Assets/GameMain/Entitys/Rocket.prefab	0
+	1007	盾牌预制	Assets/GameMain/Entitys/Shield.prefab	0
 #Scene				
 	2001	Menu	Assets/GameMain/Scenes/Menu.unity	1
 	2002	Main	Assets/GameMain/Scenes/Main.unity	1
